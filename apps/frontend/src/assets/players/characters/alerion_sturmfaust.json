@@ -1,0 +1,56 @@
+{
+  "character": {
+    "name": "Alerion Sturmfaust",
+    "race": "Elf",
+    "class": "Krieger",
+    "level": 3,
+    "background": "Soldat",
+    "alignment": "Rechtschaffen Neutral",
+    "stats": {
+      "strength": 16,
+      "dexterity": 14,
+      "constitution": 14,
+      "intelligence": 10,
+      "wisdom": 12,
+      "charisma": 8
+    },
+    "hp": {
+      "max": 28,
+      "current": 28
+    },
+    "ac": 17,
+    "speed": 30,
+    "proficiencies": {
+      "armor": ["Leichte Rüstung", "Mittlere Rüstung", "Schwere Rüstung"],
+      "weapons": ["Langschwert", "Kurzbogen", "Schild"],
+      "tools": ["Schmiedewerkzeuge"],
+      "languages": ["Gemeinsprache", "Elfisch"]
+    },
+    "savingThrows": ["Stärke", "Konstitution"],
+    "skills": {
+      "athletics": 5,
+      "intimidation": 2,
+      "survival": 3,
+      "perception": 3
+    },
+    "equipment": {
+      "weapons": ["Langschwert", "Schild"],
+      "armor": ["Kettenhemd"],
+      "gear": ["Rucksack", "Abenteurerausrüstung", "Schmiedewerkzeuge"]
+    },
+    "spellcasting": {
+      "spellSlots": {
+        "level1": {
+          "max": 0,
+          "current": 0
+        }
+      },
+      "spellsKnown": {
+        "cantrips": [],
+        "level1": []
+      }
+    },
+    "features": ["Kampfstil: Verteidigung", "Zweite Wind", "Aktion Surge"],
+    "languages": ["Gemeinsprache", "Elfisch"]
+  }
+}

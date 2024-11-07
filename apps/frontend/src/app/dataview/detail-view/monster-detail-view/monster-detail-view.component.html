@@ -1,0 +1,208 @@
+<div class="p-10">
+  <div class="space-y-4">
+    <div class="flex flex-row flex-wrap">
+      <app-image-upload
+        imageUrl="assets/characters/img/pinguin.jpg"
+        [disabled]="true"
+      ></app-image-upload>
+
+      <div class="border border-gray-600 rounded mx-3 h-48"></div>
+
+      <!-- Basic Info -->
+      <div class="flex flex-col gap-8 flex-grow h-40 mb-6">
+        <p-floatLabel>
+          <input
+            type="text"
+            pInputText
+            [value]="getName()"
+            id="name"
+            class="text-2xl w-full"
+            disabled="true"
+          />
+          <label for="name">Name</label>
+        </p-floatLabel>
+
+        <div class="flex flex-row items-center gap-6">
+          <p-floatLabel>
+            <input
+              type="text"
+              pInputText
+              [value]="getType()"
+              id="type"
+              class="text-2xl"
+              disabled="true"
+            />
+            <label for="type">Type</label>
+          </p-floatLabel>
+
+          <p-floatLabel>
+            <p-dropdown
+              [options]="sizes"
+              [ngModel]="getSize()"
+              inputId="size"
+              [style]="{ minWidth: '128px' }"
+              [disabled]="true"
+            ></p-dropdown>
+            <label for="size">Size</label>
+          </p-floatLabel>
+          <!-- TODO: Alignment -->
+          <!-- TODO: Armor Class -->
+          <!-- TODO: Hit Points -->
+          <!-- TODO: Speed -->
+        </div>
+
+        <div class="flex flex-row items-center">
+          <p-floatLabel>
+            <p-dropdown
+              [options]="challengeRatings"
+              [ngModel]="getChallengeRating()"
+              inputId="challengeRating"
+              [scrollHeight]="'300px'"
+              [style]="{ minWidth: '200px' }"
+              [disabled]="true"
+            ></p-dropdown>
+            <label for="challengeRating">Challenge Rating</label>
+          </p-floatLabel>
+        </div>
+      </div>
+    </div>
+
+    <div class="border border-gray-600 rounded"></div>
+
+    <p-accordion [multiple]="true" [activeIndex]="[]">
+      <p-accordionTab header="Description">
+        <div class="relative">
+          <textarea
+            pInputTextarea
+            [value]="getDescription()"
+            rows="8"
+            cols="50"
+            class="w-full"
+            placeholder="Beschreibung"
+            [disabled]="true"
+          ></textarea>
+          <span class="char-counter">
+            {{ descriptionLength }}/{{ descriptionMaxLength }}
+          </span>
+        </div>
+      </p-accordionTab>
+
+      <p-accordionTab header="Traits">
+        <div class="relative">
+          <textarea
+            pInputTextarea
+            [value]="getTraits()"
+            rows="8"
+            cols="50"
+            class="w-full"
+            placeholder="Traits"
+            [disabled]="true"
+          ></textarea>
+          <span class="char-counter">
+            {{ traitsLength }}/{{ traitsMaxLength }}
+          </span>
+        </div>
+      </p-accordionTab>
+
+      <p-accordionTab header="Attributes & Skills"></p-accordionTab>
+
+      <p-accordionTab header="Senses"> Work in progress ...</p-accordionTab>
+
+      <p-accordionTab header="Languages">
+        <input
+          type="text"
+          pInputText
+          [value]="getLanguageNoteOverride()"
+          placeholder="Language Note Override"
+          maxlength="128"
+          class="text-2xl w-full mb-8"
+          [disabled]="true"
+        />
+
+        <app-datatable
+          [items]="getLanguages()"
+          [columns]="[
+            { field: 'name', header: 'Name', size: 40, type: 'text' },
+            { field: 'note', header: 'Note', size: 45, type: 'text' }
+          ]"
+          [primaryKeys]="['name']"
+          [disabled]="true"
+        ></app-datatable>
+      </p-accordionTab>
+
+      <p-accordionTab header="Abilities">
+        <app-datatable
+          [items]="getAbilities()"
+          [columns]="[
+            { field: 'name', header: 'Name', size: 40, type: 'text' },
+            {
+              field: 'description',
+              header: 'Description',
+              size: 45,
+              type: 'text'
+            }
+          ]"
+          [primaryKeys]="['name']"
+          [disabled]="true"
+        ></app-datatable>
+        <!-- TODO description kann schonmal mega lang werden, dahingehend müssen wir hier die ansicht anpassen, wie weiß ich noch nicht -->
+      </p-accordionTab>
+
+      <p-accordionTab header="Damage Responses">
+        <!-- TODO FARBEN :D -->
+        <div class="flex flex-col gap-6 m-4">
+          <div class="flex flex-col gap-2">
+            <label for="damageVulnerabilities">Damage Vulnerabilities</label>
+            <div class="flex flex-wrap gap-2">
+              <p-chip
+                *ngFor="let vulnerability of getDamageVulnerabilities()"
+                label="{{ vulnerability }}"
+                class="p-chip--damage"
+              ></p-chip>
+            </div>
+          </div>
+          <div class="flex flex-col gap-2">
+            <label for="damageImmunities">Damage Immunities</label>
+            <div class="flex flex-wrap gap-2">
+              <p-chip
+                *ngFor="let immunity of getDamageImmunities()"
+                label="{{ immunity }}"
+                class="p-chip--damage"
+              ></p-chip>
+            </div>
+          </div>
+          <div class="flex flex-col gap-2">
+            <label for="damageResistances">Damage Resistances</label>
+            <div class="flex flex-wrap gap-2">
+              <p-chip
+                *ngFor="let resistance of getDamageResistances()"
+                label="{{ resistance }}"
+                class="p-chip--damage"
+              ></p-chip>
+            </div>
+          </div>
+        </div>
+      </p-accordionTab>
+
+      <p-accordionTab header="Actions">
+        <app-datatable
+          [items]="getActions()"
+          [columns]="[
+            { field: 'name', header: 'Name', size: 30, type: 'text' },
+            {
+              field: 'description',
+              header: 'Description',
+              size: 35,
+              type: 'text'
+            },
+            { field: 'type', header: 'Type', size: 20, type: 'text' }
+          ]"
+          [primaryKeys]="['type']"
+          [disabled]="true"
+        ></app-datatable>
+      </p-accordionTab>
+      <!-- TODO Type durch icon repräsentieren und links als erstes anzeigen -->
+      <!-- TODO Description Feld aufdröseln und einzelne werte in tabelle anzeigen -->
+    </p-accordion>
+  </div>
+</div>

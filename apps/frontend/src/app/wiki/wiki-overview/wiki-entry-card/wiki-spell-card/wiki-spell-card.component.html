@@ -1,0 +1,75 @@
+<p-card styleClass="border rounded-3xl border-gray-600">
+  <ng-template pTemplate="header">
+    <div
+      class="mt-1 absolute flex items-center justify-center flex-1 w-40 ml-4"
+    >
+      <div class="data-field w-min px-2 text-lg">Spell</div>
+    </div>
+  </ng-template>
+
+  <div class="flex flex-row spell-info flex-wrap">
+    <!-- Spell Image (falls hinzugefügt) -->
+    <div
+      class="spell-image w-40 h-40 border-2 border-gray-500 rounded-3xl flex items-center justify-center"
+    >
+      <div
+        class="spell-image border border-gray-600 flex items-center justify-center overflow-hidden"
+        style="width: 9.5rem; height: 9.5rem; border-radius: 1.25rem"
+      >
+        <img
+          [src]="'assets/spells/img/' + (spell.img ?? 'default_spell.png')"
+          alt="{{ 'assets/spells/img/' + (spell.img ?? 'default_spell.png') }}"
+          class="w-36 h-35 rounded-2xl"
+        />
+      </div>
+    </div>
+
+    <div class="border border-gray-600 rounded mx-3 h-40"></div>
+
+    <!-- Spell Info -->
+    <div class="flex flex-col flex-1 h-40 basic-info">
+      <div class="data-field px-2 mx-1">
+        <span class="text-2xl">{{ spell.name }}</span>
+      </div>
+
+      <!-- Spell Level and School -->
+      <div class="flex items-center gap-2">
+        <label class="font-bold text-xs ml-2">Level:</label>
+        <span>{{ spell.level }}</span>
+        <label class="font-bold text-xs ml-2">School:</label>
+        <span>{{ spell.school }}</span>
+      </div>
+
+      <!-- Casting Time and Duration -->
+      <div class="flex items-center gap-2">
+        <label class="font-bold text-xs ml-2">Casting Time:</label>
+        <span>{{ spell.castingTime }}</span>
+        <label class="font-bold text-xs ml-2">Duration:</label>
+        <span>{{ spell.duration }}</span>
+      </div>
+
+      <!-- Components -->
+      <div class="flex items-center gap-2 mt-1">
+        <label class="font-bold text-xs ml-2">Components:</label>
+        <p-chip
+          *ngFor="let component of spell.components"
+          label="{{ component }}"
+          styleClass="text-xs px-1 h-5 bg-blue-500"
+        ></p-chip>
+      </div>
+
+      <!-- Concentration -->
+      <div class="flex items-center gap-2 mt-2">
+        <label class="font-bold text-xs ml-2">Concentration:</label>
+        <i
+          *ngIf="spell.concentration"
+          class="fas fa-check-circle text-green-500"
+        ></i>
+        <i
+          *ngIf="!spell.concentration"
+          class="fas fa-times-circle text-red-500"
+        ></i>
+      </div>
+    </div>
+  </div>
+</p-card>

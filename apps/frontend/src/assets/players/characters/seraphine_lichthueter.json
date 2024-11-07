@@ -1,0 +1,66 @@
+{
+  "character": {
+    "name": "Seraphina Lichthüter",
+    "race": "Mensch",
+    "class": "Kleriker",
+    "level": 5,
+    "background": "Akolytin",
+    "alignment": "Neutral Gut",
+    "stats": {
+      "strength": 10,
+      "dexterity": 12,
+      "constitution": 14,
+      "intelligence": 12,
+      "wisdom": 18,
+      "charisma": 14
+    },
+    "hp": {
+      "max": 38,
+      "current": 38
+    },
+    "ac": 16,
+    "speed": 30,
+    "proficiencies": {
+      "armor": ["Leichte Rüstung", "Mittlere Rüstung", "Schwere Rüstung"],
+      "weapons": ["Keule", "Kriegshammer"],
+      "tools": [],
+      "languages": ["Gemeinsprache", "Celestial"]
+    },
+    "savingThrows": ["Weisheit", "Charisma"],
+    "skills": {
+      "medicine": 7,
+      "insight": 8,
+      "religion": 4,
+      "persuasion": 5
+    },
+    "equipment": {
+      "weapons": ["Kriegshammer"],
+      "armor": ["Schuppenpanzer"],
+      "gear": ["Heiliges Symbol", "Gebetsbuch", "Heiltränke"]
+    },
+    "spellcasting": {
+      "spellSlots": {
+        "level1": {
+          "max": 4,
+          "current": 4
+        },
+        "level2": {
+          "max": 3,
+          "current": 3
+        },
+        "level3": {
+          "max": 2,
+          "current": 2
+        }
+      },
+      "spellsKnown": {
+        "cantrips": ["Licht", "Widerstand"],
+        "level1": ["Heilendes Wort", "Segnen"],
+        "level2": ["Lesser Restoration", "Flammenschlag"],
+        "level3": ["Daylight", "Spirit Guardians"]
+      }
+    },
+    "features": ["Göttliche Domäne: Licht", "Channel Divinity"],
+    "languages": ["Gemeinsprache", "Celestial"]
+  }
+}

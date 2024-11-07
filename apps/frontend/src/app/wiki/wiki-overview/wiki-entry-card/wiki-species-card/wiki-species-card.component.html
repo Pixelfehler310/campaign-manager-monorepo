@@ -1,0 +1,45 @@
+<p-card styleClass="border rounded-3xl border-gray-600">
+  <ng-template pTemplate="header">
+    <div
+      class="mt-1 absolute flex items-center justify-center flex-1 w-40 ml-4"
+    >
+      <div class="data-field w-min px-2 text-lg">Species</div>
+    </div>
+  </ng-template>
+  <!-- todo: assets/characters urls und so wie bei den anderen halt auch ich schreib das jz nicht noch 3 mal xD-->
+  <div class="flex flex-row character-info flex-wrap">
+    <!-- Character Image -->
+    <div
+      class="character-image w-40 h-40 border-2 border-gray-500 rounded-3xl flex items-center justify-center"
+    >
+      <div
+        class="character-image border border-gray-600 flex items-center justify-center overflow-hidden"
+        style="width: 9.5rem; height: 9.5rem; border-radius: 1.25rem"
+      >
+        <img
+          [src]="'assets/characters/img/' + (species.img ?? 'pinguin.jpg')"
+          alt="{{
+            'assets/characters/img/' + (species.img ?? 'dwarf_male.png')
+          }}"
+          class="w-36 h-35 rounded-2xl"
+        />
+      </div>
+    </div>
+
+    <div class="border border-gray-600 rounded mx-3 h-40"></div>
+
+    <!-- Basic Info -->
+    <div class="flex flex-col flex-1 h-40 basic-info">
+      <div class="data-field px-2 mx-1">
+        <span class="text-2xl">{{ species.name }}</span>
+      </div>
+      <p
+        class="description data-field px-2 mx-1 mt-4 text-xs h-28 line-clamp-7 overflow-hidden"
+      >
+        {{ species.description }}
+      </p>
+    </div>
+  </div>
+</p-card>
+
+<!-- TODO: Vertical layout für media -->

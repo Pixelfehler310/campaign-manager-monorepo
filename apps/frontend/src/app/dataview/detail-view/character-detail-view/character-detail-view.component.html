@@ -1,0 +1,445 @@
+<!-- TODO In Subkomponenten aufteilen 9, Konzept und Doku dafür 4 -->
+<!-- TODO: Überall wo ich diese Referenztypen hingemacht hab (Pick<bla bla>) muss noch ein .name hinter, da das jetzt eine andere struktur hat, als beispiel, siehe species und class -->
+<!-- ! Ideal wäre eine Komponente für Form und detail (Form view z.b einfach in disabled = detailview, aber nicht zwingend, hat auch nachteile) -->
+<div class="p-10">
+  <div *ngIf="character" class="space-y-4">
+    <div class="flex flex-row character-info flex-wrap">
+      <!-- Character Image -->
+      <app-image-upload
+        [imageUrl]="'assets/characters/img/' + (character.img ?? 'pinguin.jpg')"
+      ></app-image-upload>
+
+      <div class="border border-gray-600 rounded mx-3 h-40"></div>
+
+      <!-- Basic Info -->
+      <div class="flex flex-col flex-1 h-40 basic-info">
+        <div class="data-field px-2 mx-1">
+          <span class="text-2xl">{{ character.name }}</span>
+        </div>
+
+        <label class="font-bold mr-2">Klasse:</label>
+        <div class="data-field px-2 mx-1 w-min flex items-center gap-2">
+          <span class="w-min">{{ character.class?.name }}</span>
+          <span class="w-min text-center">{{ character.level }}</span>
+        </div>
+        <div>
+          <label class="font-bold">Spezies:</label>
+          <div class="data-field px-2 mx-1 w-min flex items-center gap-2">
+            <span>{{ character.species.name }}</span>
+            <div *ngIf="character.gender">
+              <div [ngSwitch]="character.gender">
+                <i *ngSwitchCase="'Male'" class="fas fa-mars text-blue-500"></i>
+                <i
+                  *ngSwitchCase="'Female'"
+                  class="fas fa-venus text-pink-500"
+                ></i>
+                <i
+                  *ngSwitchCase="'Other'"
+                  class="fas fa-genderless text-yellow-500"
+                ></i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-1 items-end justify-end">
+          <div class="flex flex-col items-end px-2">
+            <label class="font-bold mr-2">Spieler:</label>
+            <div class="data-field px-2 mx-1 my-1 w-min line-clamp-1">
+              <span>{{ character.player }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <app-dice-info></app-dice-info>
+
+    <p-accordion [multiple]="true" [activeIndex]="[0, 1, 2, 3, 4]">
+      <p-accordionTab header="Attributes & Skills">
+        <div class="flex flex-1 flex-col px-3" style="height: 40rem">
+          <!-- Attributes -->
+          <div class="attributes w-full h-32">
+            <div class="flex flex-row justify-around">
+              <ng-container *ngFor="let attr of getAttributes()">
+                <div class="flex flex-row items-center gap-1 w-min">
+                  <div
+                    class="flex flex-col items-center justify-center text-2xl p-1 rounded-xl border-2 border-gray-600 bg-neutral-950"
+                    style="width: 5.75rem"
+                  >
+                    <div
+                      class="flex flex-col items-center w-18 text-2xl p-2 rounded-lg border border-gray-700 bg-neutral-900"
+                    >
+                      <label class="text-xs">{{ attr.label }}</label>
+                      <!-- Todo: proficiency 4 kleine anzeige in den ecken, s.formview oder zusatzfeld für die saving throws idk-->
+                      <div class="w-16 h-12 text-center text-3xl">
+                        {{ attr.value }}
+                      </div>
+                      <div
+                        class="text-center w-10 h-7 bg-gray-800 text-base -mt-2"
+                        style="border-radius: 70%"
+                      >
+                        {{ getModifier(attr) > 0 ? '+' : ''
+                        }}{{ getModifier(attr) }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+
+          <div class="divider my-2"></div>
+
+          <!-- Skills -->
+          <div class="skills flex flex-1 flex-col gap-2 mt-2">
+            <div
+              class="flex flex-row justify-center align-content-around text-xl px-4"
+            >
+              <div class="w-1/2 flex flex-row items-center justify-start">
+                <span class="data-field square medium"
+                  >+{{ getProficiencyBonus() }}</span
+                >
+                <label class="ml-4 text-sm">Proficiency Bonus</label>
+              </div>
+              <div class="w-1/2 flex flex-row justify-end items-center">
+                <label class="mr-4 text-sm">Jack of All Trades</label>
+                <div
+                  *ngIf="
+                    character.skills?.jackOfAllTrades;
+                    else noJackOfAllTrades
+                  "
+                >
+                  <i
+                    class="data-field square small text-lg pi pi-check text-green-600"
+                  ></i>
+                </div>
+                <ng-template #noJackOfAllTrades>
+                  <i
+                    class="data-field square small flex justify-center items-center pi pi-times text-red-600"
+                  ></i>
+                </ng-template>
+              </div>
+            </div>
+
+            <p-table
+              [value]="getSkills()"
+              [scrollable]="true"
+              scrollHeight="29rem"
+              responsiveLayout="scroll"
+              class="p-datatable-striped h-40"
+              styleClass="p-datatable-sm"
+            >
+              <ng-template pTemplate="header">
+                <tr>
+                  <th>Skill</th>
+                  <th class="text-center">Bonus</th>
+                  <th class="text-center">Proficiency</th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-skill>
+                <tr class="h-2">
+                  <td>{{ skill.label }}</td>
+                  <td class="text-center">
+                    {{ getSkillModifier(skill.key) > 0 ? '+' : ''
+                    }}{{ getSkillModifier(skill.key) }}
+                  </td>
+                  <td class="text-center">
+                    <ng-container [ngSwitch]="skill.proficiency">
+                      <i
+                        *ngSwitchCase="'untrained'"
+                        class="pi pi-times text-red-600"
+                      ></i>
+                      <i
+                        *ngSwitchCase="'proficient'"
+                        class="pi pi-star text-yellow-600"
+                      ></i>
+                      <i
+                        *ngSwitchCase="'expert'"
+                        class="pi pi-star-fill text-green-600"
+                      ></i>
+                      <i *ngSwitchDefault class="pi pi-times text-red-600"></i>
+                    </ng-container>
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
+        </div>
+      </p-accordionTab>
+
+      <p-accordionTab
+        [header]="'Attacks' + (character.spellCasterInfo ? ' & Spells' : '')"
+      >
+        <div class="text-lg ml-2 my-2 -mt-3">Attacks</div>
+        <div
+          class="rounded-2xl attack-card overflow-auto max-h-96 border p-2 border-gray-600"
+        >
+          <p-table
+            [value]="character.actions"
+            *ngIf="
+              character && character.actions && character.actions.length > 0;
+              else noAttacks
+            "
+            styleClass="p-datatable-sm"
+          >
+            <!-- Todo: ng if /  ng switch mit den actiontypes 6-->
+            <ng-template pTemplate="header">
+              <tr class="text-xs">
+                <th>Name</th>
+                <th>Range</th>
+                <th>Bonus</th>
+                <th>Proficiency</th>
+                <th>Damage</th>
+                <th>Damage Type</th>
+                <th>Attack Type</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-attack let-i="rowIndex">
+              <tr>
+                <td>{{ attack.name }}</td>
+                <td>{{ attack.range }}</td>
+                <!-- Todo: To pipe: Pipe erstellen für modifier (modifier sollen immer mit plus davor angezeigt werden) 7-->
+                <td class="text-center">
+                  {{ attack.attackBonus > 0 ? '+' : ''
+                  }}{{ attack.attackBonus }}
+                </td>
+
+                <td class="text-center">
+                  <ng-container *ngIf="attack.proficiency; else untrained">
+                    <i
+                      class="data-field square small text-lg pi pi-check text-green-600"
+                    ></i>
+                  </ng-container>
+                  <ng-template #untrained>
+                    <i
+                      class="data-field square small pi pi-times text-red-600"
+                    ></i>
+                  </ng-template>
+                </td>
+                <!-- todo dice componente für dmg / healing bei den actions, s.jira 6-8 -->
+                <td class="text-center text-xs">
+                  <div
+                    *ngFor="
+                      let dicetype of getDamageDiceTypes(attack.damage);
+                      let i = index
+                    "
+                    class="inline"
+                  >
+                    {{ dicetype.count }} x D{{ dicetype.dice }}
+                  </div>
+                </td>
+                <td>{{ attack.damageType }}</td>
+                <td>{{ attack.attackType }}</td>
+              </tr>
+              <tr *ngIf="i !== character.actions.length - 1">
+                <td colspan="7">
+                  <div class="divider"></div>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+
+          <ng-template #noAttacks>
+            <div>No Attacks yet</div>
+          </ng-template>
+        </div>
+
+        <div
+          *ngIf="character && character.spellCasterInfo"
+          class="divider my-3"
+        ></div>
+
+        <div
+          *ngIf="character && character.spellCasterInfo"
+          class="text-lg ml-2 my-2"
+        >
+          Spells
+        </div>
+        <div
+          *ngIf="character && character.spellCasterInfo"
+          class="rounded-2xl overflow-auto max-h-96 border p-2 border-gray-600"
+        >
+          <div *ngIf="character.spellCasterInfo.spellLevel.length > 0">
+            <!-- Todo: Spellclass & spell attribute 1 -->
+            <div
+              *ngFor="
+                let spellLevelInfo of character.spellCasterInfo.spellLevel ??
+                  [];
+                let i = index
+              "
+              class="rounded"
+            >
+              <p-panel
+                [toggleable]="true"
+                [collapsed]="true"
+                styleClass="spell-panel"
+              >
+                <ng-template pTemplate="header">
+                  <div class="flex flex-row items-center h-10 gap-2">
+                    <div class="w-24">
+                      {{ i !== 0 ? 'Level ' + i + ' Spells' : 'Cantrips' }}
+                    </div>
+                    <div class="flex flex-row items-center">
+                      {{ '(' + spellLevelInfo.spells.length + ')' }}
+                    </div>
+                    <div
+                      *ngIf="i !== 0; else cantrips"
+                      class="flex flex-row items-center"
+                    >
+                      {{
+                        spellLevelInfo.maxSlots - spellLevelInfo.currentSlots
+                      }}
+                      / {{ spellLevelInfo.maxSlots }}
+                    </div>
+                    <ng-template #cantrips>
+                      <div class="flex flex-row items-center">
+                        - /
+                        <!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+                        <svg
+                          class="w-5 h-5 mt-1"
+                          fill="currentColor "
+                          stroke="currentColor "
+                          viewBox="0 0 24 24 "
+                          xmlns="http://www.w3.org/2000/svg "
+                        >
+                          <path
+                            d="M20.288 9.463a4.856 4.856 0 0 0-4.336-2.3 4.586 4.586 0 0 0-3.343 1.767c.071.116.148.226.212.347l.879 1.652.134-.254a2.71 2.71 0 0 1 2.206-1.519 2.845 2.845 0 1 1 0 5.686 2.708 2.708 0 0 1-2.205-1.518L13.131
+                                12l-1.193-2.26a4.709 4.709 0 0 0-3.89-2.581 4.845 4.845 0 1 0 0 9.682 4.586 4.586 0 0 0 3.343-1.767c-.071-.116-.148-.226-.212-.347l-.879-1.656-.134.254a2.71 2.71 0 0 1-2.206 1.519 2.855 2.855 0 0 1-2.559-1.369 2.825 2.825 0
+                                0 1 0-2.946 2.862 2.862 0 0 1 2.442-1.374h.121a2.708 2.708 0 0 1 2.205 1.518l.7 1.327 1.193 2.26a4.709 4.709 0 0 0 3.89 2.581h.209a4.846 4.846 0 0 0 4.127-7.378z "
+                          />
+                        </svg>
+                      </div>
+                    </ng-template>
+                  </div>
+                </ng-template>
+                <div *ngIf="spellLevelInfo.spells.length > 0; else noSpells">
+                  <div
+                    *ngFor="let spell of spellLevelInfo.spells ?? []"
+                    class="rounded"
+                  >
+                    <div>{{ spell.name }}</div>
+                  </div>
+                </div>
+                <ng-template #noSpells>
+                  <div>No Spells learned yet</div>
+                </ng-template>
+              </p-panel>
+
+              <div
+                *ngIf="i !== character.spellCasterInfo.spellLevel.length - 1"
+                class="border border-gray-600 rounded my-1"
+              ></div>
+            </div>
+          </div>
+        </div>
+        <!-- TODO: Dokumentieren: 1
+                 Struktur:
+                    Panels wie bei Inventory für Zauber lvl
+                    In jedem Panel liste wie bei attack
+                 -->
+      </p-accordionTab>
+
+      <p-accordionTab header="Inventory ">
+        <div
+          class="rounded-2xl overflow-auto max-h-96 border p-2 border-gray-600 -mt-3"
+        >
+          <div *ngIf="character && character.inventory">
+            <!-- <div *ngIf="character.inventory && character.inventory.money " class="flex flex-row gap-2 justify-evenly px-2 ">
+                            <div> <i class="fa fa-coins " style="color:#E5E4E2 ; "></i> {{ character.inventory.money.platin }}</div>
+                            <div> <i class="fa fa-coins " style="color:#FFD700 ; "></i> {{ character.inventory.money.gold }}</div>
+                            <div> <i class="fa fa-coins " style="color:#C0C0C0 ; "></i> {{ character.inventory.money.silver }}</div>
+                            <div> <i class="fa fa-coins " style="color:#CD7F32 ; "></i> {{ character.inventory.money.copper }}</div>
+                        </div> -->
+            <div
+              *ngIf="character.inventory && character.inventory.money"
+              class="flex flex-row gap-2 justify-evenly px-2"
+            >
+              <div>
+                <i class="fa fa-coins text-gray-300"></i>
+                {{ character.inventory.money.platin }}
+              </div>
+              <div>
+                <i class="fa fa-coins text-amber-400"></i>
+                {{ character.inventory.money.gold }}
+              </div>
+              <div>
+                <i class="fa fa-coins text-gray-500"></i>
+                {{ character.inventory.money.silver }}
+              </div>
+              <div>
+                <i class="fa fa-coins text-amber-700"></i>
+                {{ character.inventory.money.copper }}
+              </div>
+            </div>
+            <div
+              *ngIf="
+                character.inventory.items &&
+                  character.inventory.items.length > 0;
+                else noItems
+              "
+            >
+              <div
+                *ngFor="
+                  let item of character.inventory.items ?? [];
+                  let i = index
+                "
+                class="rounded"
+              >
+                <p-panel
+                  [toggleable]="true"
+                  [collapsed]="true"
+                  styleClass="item-panel"
+                >
+                  <ng-template pTemplate="header">
+                    <div class="flex flex-row items-center h-10 gap-2">
+                      <span>{{ item.name }}</span>
+                      <!-- todo quantity berechnen und anzeigen <span>{{ item?.quantity ?? 1 }}</span> 5: doppelte anzeigen müssen gemerged werden, vllt ist das knifflig idk-->
+                    </div>
+                  </ng-template>
+                </p-panel>
+
+                <div
+                  *ngIf="i !== character.inventory.items.length - 1"
+                  class="border border-gray-600 rounded my-1"
+                ></div>
+              </div>
+            </div>
+            <ng-template #noItems>
+              <div>No Items yet</div>
+            </ng-template>
+          </div>
+        </div>
+      </p-accordionTab>
+
+      <p-accordionTab header="Background & Personality">
+        <p-accordion [multiple]="true">
+          <p-accordionTab header="Hintergrund">
+            <div>{{ character.background }}</div>
+          </p-accordionTab>
+          <p-accordionTab header="Persönlichkeit">
+            <div>{{ character.personality }}</div>
+          </p-accordionTab>
+          <p-accordionTab header="Ideale">
+            <div>{{ character.ideals }}</div>
+          </p-accordionTab>
+          <p-accordionTab header="Bindungen">
+            <div>{{ character.bonds }}</div>
+          </p-accordionTab>
+          <p-accordionTab header="Makel">
+            <div>{{ character.flaws }}</div>
+          </p-accordionTab>
+
+          <!-- Todo Factions: string list, am liebsten mit p autocomplete, aber p-chips reichen erstmal 3, später, oder jetzt schon, chips mit links versehen, dann 4-->
+        </p-accordion>
+      </p-accordionTab>
+
+      <p-accordionTab
+        header="Merkmale, Eigenschaften und besondere Fähigkeiten"
+      >
+        <div *ngFor="let ability of character.abilities">{{ ability }}</div>
+      </p-accordionTab>
+    </p-accordion>
+  </div>
+</div>

@@ -1,0 +1,80 @@
+<div class="p-10">
+  <div *ngIf="species" class="space-y-4">
+    <div class="flex flex-row species-info flex-wrap">
+      <div
+        class="species-image w-40 h-40 border-2 border-gray-500 rounded-3xl flex items-center justify-center"
+      >
+        <div
+          class="species-image border border-gray-600 flex items-center justify-center overflow-hidden"
+          style="width: 9.5rem; height: 9.5rem; border-radius: 1.25rem"
+        >
+          <img
+            [src]="'assets/species/' + species.img"
+            alt="{{ species.name }} image"
+            class="w-36 h-35 rounded-2xl"
+          />
+        </div>
+      </div>
+      <div class="border border-gray-600 rounded mx-3 h-40"></div>
+
+      <!-- species Basic Info -->
+      <div class="flex flex-col flex-1 h-40 basic-info">
+        <div class="px-2 mx-1">
+          <span class="text-2xl">{{ species.name }}</span>
+        </div>
+        <div class="px-2 mx-1 mt-4 h-28">
+          <p-tabView>
+            <p-tabPanel header="Abilities">
+              <div class="flex flex-auto x-wrap gap-2 overflow-y-auto">
+                <p-chip
+                  *ngFor="let ability of species.abilities"
+                  (click)="showAbilityOverlay($event, ability, overlayPanel)"
+                  label="{{ ability.name }}"
+                  class="p-chip-ability"
+                ></p-chip>
+              </div>
+              <p-overlayPanel #overlayPanel>
+                <div class="p-4">
+                  <h5 class="text-lg font-bold">{{ selectedAbility?.name }}</h5>
+                  <p class="text-sm">{{ selectedAbility?.description }}</p>
+                  <button
+                    pRipple
+                    pButton
+                    type="button"
+                    label="Close"
+                    icon="pi pi-times"
+                    class="mt-3"
+                    (click)="overlayPanel.hide()"
+                  ></button>
+                </div>
+              </p-overlayPanel>
+            </p-tabPanel>
+          </p-tabView>
+        </div>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <p-accordion [multiple]="true" [activeIndex]="[0]">
+      <!-- Description Accordion Tab -->
+      <p-accordionTab header="Description">
+        <div class="flex flex-col gap-4 p-4 rounded-md shadow-md">
+          <p class="text-sm">{{ species.description }}</p>
+        </div>
+      </p-accordionTab>
+      <!-- Abilities Accordion Tab -->
+      <p-accordionTab header="Abilities">
+        <div class="flex flex-1 flex-col px-4 py-4">
+          <p-accordion [multiple]="true">
+            <ng-container *ngFor="let ability of abilities">
+              <p-accordionTab header="{{ ability.name }}">
+                <div class="flex flex-col gap-4 p-4 rounded-md shadow-md">
+                  <p class="text">{{ ability.description }}</p>
+                </div>
+              </p-accordionTab>
+            </ng-container>
+          </p-accordion>
+        </div>
+      </p-accordionTab>
+    </p-accordion>
+  </div>
+</div>

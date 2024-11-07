@@ -1,0 +1,56 @@
+{
+  "character": {
+    "name": "Valen Schattenklinge",
+    "race": "Halb-Elf",
+    "class": "Schurke",
+    "level": 4,
+    "background": "Dieb",
+    "alignment": "Chaotisch Neutral",
+    "stats": {
+      "strength": 10,
+      "dexterity": 18,
+      "constitution": 12,
+      "intelligence": 14,
+      "wisdom": 10,
+      "charisma": 16
+    },
+    "hp": {
+      "max": 24,
+      "current": 24
+    },
+    "ac": 15,
+    "speed": 30,
+    "proficiencies": {
+      "armor": ["Leichte Rüstung"],
+      "weapons": ["Dolche", "Kurzschwerter", "Armbrust"],
+      "tools": ["Diebeswerkzeuge"],
+      "languages": ["Gemeinsprache", "Untergemein"]
+    },
+    "savingThrows": ["Geschicklichkeit", "Intelligenz"],
+    "skills": {
+      "stealth": 7,
+      "acrobatics": 6,
+      "deception": 5,
+      "investigation": 4
+    },
+    "equipment": {
+      "weapons": ["Kurzschwert", "Dolch"],
+      "armor": ["Lederrüstung"],
+      "gear": ["Diebeswerkzeuge", "Schleuder", "Rauchbomben"]
+    },
+    "spellcasting": {
+      "spellSlots": {
+        "level1": {
+          "max": 0,
+          "current": 0
+        }
+      },
+      "spellsKnown": {
+        "cantrips": [],
+        "level1": []
+      }
+    },
+    "features": ["Sneak Attack", "Cunning Action"],
+    "languages": ["Gemeinsprache", "Untergemein"]
+  }
+}

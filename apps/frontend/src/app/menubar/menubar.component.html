@@ -1,0 +1,17 @@
+<p-menubar [model]="items" [autoDisplay]="true">
+  <!-- TODO: autodisplay not working
+     eigentlich wollte ich dass die items schon on hover displayt werden, bei der story wär das wichtig
+     ggf convertieren in megamenu 5
+     -->
+  <ng-template pTemplate="end">
+    <div class="flex justify-end items-center space-x-4">
+      <!-- TODO: Group by world 4 -->
+      <p-dropdown
+        [options]="campaigns"
+        [(ngModel)]="selectedCampaign"
+        optionLabel="name"
+        placeholder="Select a Campaign"
+      />
+    </div>
+  </ng-template>
+</p-menubar>

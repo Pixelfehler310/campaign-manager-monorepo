@@ -1,0 +1,123 @@
+import { DiceType } from 'src/app/types/dice';
+import { AttackType, Attack, ActionType } from 'src/app/types/actions';
+import { Attribute } from 'src/app/types/attributes';
+import { Character, Lifestyle } from 'src/app/types/characters';
+import { Skill } from 'src/app/types/skills';
+import { SizeCategory } from 'src/app/types/entities';
+
+export const thorin: Character = {
+  id: 0,
+  name: 'Thorin Oakenshield',
+  level: 5,
+  class: { id: 0, name: 'Fighter' },
+  background: 'Noble',
+  species: { id: 0, name: 'Dwarf' },
+  player: 'Gimli',
+  personality: 'Brave and determined',
+  abilities: ['Dwarven Resilience'],
+  ideals: 'Honor above all',
+  bonds: 'Family is everything',
+  flaws: 'Stubbornness',
+  attributes: {
+    [Attribute.STR]: { value: 16, prof: true },
+    [Attribute.DEX]: { value: 14, prof: false },
+    [Attribute.CON]: { value: 15, prof: true },
+    [Attribute.INT]: { value: 10, prof: false },
+    [Attribute.WIS]: { value: 12, prof: false },
+    [Attribute.CHA]: { value: 8, prof: false },
+  },
+  skills: {
+    jackOfAllTrades: false,
+    [Skill.Acrobatics]: 'untrained',
+    [Skill.Arcana]: 'untrained',
+    [Skill.Athletics]: 'proficient',
+    [Skill.Deception]: 'untrained',
+    [Skill.History]: 'proficient',
+    [Skill.Insight]: 'expert',
+    weapon_skills: {
+      armor: {
+        light: false,
+        medium: true,
+        heavy: false,
+        shields: true,
+      },
+      weapons: {
+        easy: false,
+        war: true,
+        other: [],
+      },
+    },
+  },
+  speed: 25,
+  ac: 18,
+  hp: {
+    max: 40,
+    temp: 0,
+    current: 35,
+    dice: DiceType.D8,
+    regenerationDiceCount: 5,
+  },
+  actions: [
+    {
+      name: 'Longsword Strike',
+      range: 5,
+      attackBonus: 5,
+      proficiency: true,
+      damage: { [DiceType.D8]: 1 },
+      damageType: 'Slashing',
+      attackType: AttackType.Melee,
+      type: ActionType.Attack,
+    } as Attack,
+  ],
+  age: 140,
+  alignment: 'Lawful Good',
+  gender: 'Male',
+  appearance: {
+    height: 4.5,
+    weight: 180,
+    visuals: 'Bearded and stout',
+    eyeColor: 'Brown',
+    hairColor: 'Black',
+    skinColor: 'Tan',
+    img: 'assets/characters/img/thorin.png',
+    sizeCategory: SizeCategory.Small,
+  },
+  description: 'A noble dwarf with a fierce demeanor.',
+  img: 'assets/characters/img/thorin.png',
+  relationships: [],
+  languages: ['Common', 'Dwarvish'],
+  friendlyFactions: [{ id: 0, name: 'The Fellowship of the Ring' }],
+  enemyFactions: [
+    { id: 0, name: 'The Mountain' },
+    { id: 0, name: 'Smaug' },
+  ],
+  inventory: {
+    id: 0,
+    money: {
+      platin: 0,
+      gold: 150,
+      silver: 50,
+      copper: 100,
+    },
+    items: [
+      { id: 0, name: 'Health Potion' },
+      { id: 0, name: 'Dwarven Armor' },
+      { id: 0, name: 'Dwarven Shield' },
+      { id: 0, name: 'Map of the Lonely Mountain' },
+      { id: 0, name: 'Smithing Tools' },
+    ],
+  },
+  spellCasterInfo: {
+    entity_id: 0,
+    spellLevel: [],
+    spellClass: { id: 0, name: 'Barbarian' },
+    spellAttribute: Attribute.INT,
+    spellAttackbonus: 0,
+    spellSavingThrow: '',
+  },
+  inspiration: false,
+  lifestyle: Lifestyle.Wretched,
+  faith: 'Moradin',
+  conditions: [],
+  deathSaves: [],
+};

@@ -1,0 +1,18 @@
+.card {
+  @apply p-4 border rounded-lg shadow-md;
+}
+
+::ng-deep {
+  .wiki-card .p-card .p-card-content {
+    padding: 0 !important;
+  }
+  .wiki-card .p-card .p-card-body {
+    padding: 1rem !important;
+  }
+}
+
+:host ::ng-deep .p-tooltip {
+  background-color: grey;
+  color: green;
+  @apply rounded-sm;
+}

@@ -1,0 +1,26 @@
+<div [ngSwitch]="category">
+  <div *ngSwitchCase="'monster'">
+    <app-monster-detail-view [id]="id"></app-monster-detail-view>
+  </div>
+  <div *ngSwitchCase="'character'">
+    <app-character-detail-view [id]="id"></app-character-detail-view>
+  </div>
+  <div *ngSwitchCase="'region'">
+    <app-region-detail-view [id]="id"></app-region-detail-view>
+  </div>
+  <div *ngSwitchCase="'spell'">
+    <app-spell-detail-view [id]="id"></app-spell-detail-view>
+  </div>
+  <div *ngSwitchCase="'class'">
+    <app-class-detail-view [id]="id"></app-class-detail-view>
+  </div>
+  <div *ngSwitchCase="'item'">
+    <app-item-detail-view [id]="id"></app-item-detail-view>
+  </div>
+  <div *ngSwitchCase="'species'">
+    <app-species-detail-view [id]="id"></app-species-detail-view>
+  </div>
+  <div *ngSwitchDefault>
+    <p>Unknown category: {{ category }}</p>
+  </div>
+</div>

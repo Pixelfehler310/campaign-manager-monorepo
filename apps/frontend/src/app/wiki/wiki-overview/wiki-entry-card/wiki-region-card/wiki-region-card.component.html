@@ -1,0 +1,75 @@
+<p-card styleClass="border rounded-3xl border-gray-600">
+  <ng-template pTemplate="header">
+    <div
+      class="mt-1 absolute flex items-center justify-center flex-1 w-40 ml-4"
+    >
+      <div class="data-field w-min px-2 text-lg">Region</div>
+    </div>
+  </ng-template>
+  <div class="flex flex-row region-info flex-wrap">
+    <div
+      class="monster-image w-40 h-40 border-2 border-gray-500 rounded-3xl flex items-center justify-center"
+    >
+      <div
+        class="monster-image border border-gray-600 flex items-center justify-center overflow-hidden"
+        style="width: 9.5rem; height: 9.5rem; border-radius: 1.25rem"
+      >
+        <img
+          [src]="'assets/characters/img/' + (region.img ?? 'pinguin.jpg')"
+          alt="{{
+            'assets/characters/img/' + (region.img ?? 'dwarf_male.png')
+          }}"
+          class="w-36 h-35 rounded-2xl"
+        />
+      </div>
+    </div>
+
+    <div class="border border-gray-600 rounded mx-3 h-40"></div>
+    <!-- Region Basic Info -->
+    <div class="flex flex-col flex-1 h-40 basic-info">
+      <div class="data-field px-2 mx-1 mb-1">
+        <span class="text-2xl">{{ region.name }}</span>
+      </div>
+
+      <!-- Locations and Factions as two separate columns -->
+      <div class="flex flex-row justify-between mt-2">
+        <!-- Locations Column -->
+        <div
+          *ngIf="region.locations && region.locations.length > 0"
+          class="flex flex-col flex-1 px-2"
+        >
+          <div class="flex flex-wrap gap-1 items-center">
+            <label class="font-bold text-xs">Locations:</label>
+            <p-chip
+              *ngFor="let location of region.locations"
+              styleClass="text-xs px-1 h-5 bg-blue-600"
+              label="{{ location }}"
+            ></p-chip>
+          </div>
+        </div>
+
+        <!-- Factions Column -->
+        <div
+          *ngIf="region.factions && region.factions.length > 0"
+          class="flex flex-col flex-1 px-2"
+        >
+          <div class="flex flex-wrap gap-1 items-center">
+            <label class="font-bold text-xs">Factions:</label>
+            <p-chip
+              *ngFor="let faction of region.factions"
+              styleClass="text-xs px-1 h-5 bg-green-600"
+              label="{{ faction }}"
+            ></p-chip>
+          </div>
+        </div>
+      </div>
+
+      <!-- Description -->
+      <p
+        class="description data-field px-2 mx-1 mt-2 text-xs h-28 line-clamp-5 overflow-hidden"
+      >
+        {{ region.description }}
+      </p>
+    </div>
+  </div>
+</p-card>

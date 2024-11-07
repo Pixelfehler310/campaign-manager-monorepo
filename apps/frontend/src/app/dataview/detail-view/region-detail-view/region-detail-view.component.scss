@@ -1,0 +1,30 @@
+.basic-info {
+  label {
+    font-weight: bold;
+    margin-left: 0.5rem;
+    font-size: 0.625rem;
+  }
+}
+.p-overlaypanel .p-overlaypanel-content {
+  background-color: red;
+}
+
+.p-float-label {
+  position: relative;
+}
+
+.p-float-label label {
+  position: absolute;
+  top: 50%; /* Anpassen für die richtige Position */
+  left: 12px; /* Abstände anpassen */
+  transform: translateY(-50%); /* Vertikale Zentrierung */
+  transition: all 0.2s ease;
+  color: #999; /* Farbe des Labels */
+}
+
+.p-multiselect:focus ~ label,
+.p-multiselect:not(:placeholder-shown) ~ label {
+  top: 0; /* Label nach oben verschieben */
+  font-size: 12px; /* Schriftgröße anpassen */
+  color: #007bff; /* Farbe beim Fokus */
+}

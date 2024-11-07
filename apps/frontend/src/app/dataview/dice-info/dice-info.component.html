@@ -1,0 +1,149 @@
+<div *ngIf="diceData" class="dice-container">
+  <div *ngFor="let dicetype of getDiceTypes()" class="dice-type">
+    <div
+      class="dice-type-icon border rounded-md border-{{
+        getBorderForDiceType(dicetype.dice)
+      }}-500 icon-{{ dicetype.dice }}"
+    >
+      {{ dicetype.dice }}
+    </div>
+    <div>x</div>
+    <div class="data-field w-3 h-3 text-center">{{ dicetype.count }}</div>
+    <!-- TODO letzteres muss disabled inputfield sein oder so -->
+  </div>
+</div>
+
+<svg
+  class="dice-icon"
+  width="100"
+  height="100"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <!-- Kreis mit 2 -->
+  <circle cx="50" cy="50" r="40" fill="lightgrey" id="circle" />
+  <text
+    x="50%"
+    y="55%"
+    text-anchor="middle"
+    font-size="30"
+    fill="black"
+    id="text"
+  >
+    2
+  </text>
+</svg>
+
+<svg
+  class="dice-icon"
+  width="100"
+  height="100"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <!-- Dreieck mit 4 -->
+  <polygon points="50,15 90,85 10,85" fill="lightgrey" id="triangle" />
+  <text
+    x="50%"
+    y="65%"
+    text-anchor="middle"
+    font-size="30"
+    fill="black"
+    id="text"
+  >
+    4
+  </text>
+</svg>
+
+<svg
+  class="dice-icon"
+  width="100"
+  height="100"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <!-- Abgerundetes Rechteck mit 6 -->
+  <rect
+    x="10"
+    y="10"
+    width="80"
+    height="80"
+    rx="15"
+    ry="15"
+    fill="lightgrey"
+    id="rectangle"
+  />
+  <text
+    x="50%"
+    y="60%"
+    text-anchor="middle"
+    font-size="30"
+    fill="black"
+    id="text"
+  >
+    6
+  </text>
+</svg>
+
+<svg
+  class="dice-icon"
+  width="100"
+  height="100"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <!-- Raute mit 8 -->
+  <polygon points="50,10 90,50 50,90 10,50" fill="lightgrey" id="diamond" />
+  <text
+    x="50%"
+    y="60%"
+    text-anchor="middle"
+    font-size="30"
+    fill="black"
+    id="text"
+  >
+    8
+  </text>
+</svg>
+
+<svg
+  class="dice-icon"
+  width="100"
+  height="100"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <!-- Umgedrehter Drachen mit 10 -->
+  <polygon points="50,90 80,65 50,10 20,65" fill="lightgrey" id="kite" />
+  <text
+    x="50%"
+    y="60%"
+    text-anchor="middle"
+    font-size="30"
+    fill="black"
+    id="text"
+  >
+    10
+  </text>
+</svg>
+
+<svg
+  class="dice-icon"
+  width="100"
+  height="100"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <!-- Fünfeck mit 12 -->
+  <polygon
+    points="50,10 90,35 75,85 25,85 10,35"
+    fill="lightgrey"
+    id="pentagon"
+  />
+  <text
+    x="50%"
+    y="60%"
+    text-anchor="middle"
+    font-size="30"
+    fill="black"
+    id="text"
+  >
+    12
+  </text>
+</svg>
+
+<!-- TODO: Overlay on Click beim container, bei dem dann dice types hinzugefügt werden können, nur möglich im nicht disabled mode -->

@@ -1,0 +1,381 @@
+<div class="p-10">
+  <form [formGroup]="monsterForm" (ngSubmit)="onSubmit()" class="space-y-4">
+    <div class="flex flex-row flex-wrap">
+      <app-image-upload formControlName="monsterImage"></app-image-upload>
+
+      <div class="border border-gray-600 rounded mx-3 h-48"></div>
+
+      <!-- Basic Info -->
+      <div class="flex flex-col gap-8 flex-grow h-40 mb-6">
+        <p-floatLabel>
+          <input
+            type="text"
+            pInputText
+            formControlName="name"
+            id="name"
+            class="text-2xl w-full"
+          />
+          <label for="name">Name</label>
+        </p-floatLabel>
+
+        <div class="flex flex-row items-center gap-6">
+          <p-floatLabel>
+            <input
+              type="text"
+              pInputText
+              formControlName="type"
+              id="type"
+              class="text-2xl"
+            />
+            <label for="type">Type</label>
+          </p-floatLabel>
+
+          <p-floatLabel>
+            <p-dropdown
+              [options]="sizes"
+              formControlName="sizeCategory"
+              inputId="size"
+              [style]="{ minWidth: '128px' }"
+            ></p-dropdown>
+            <label for="size">Size</label>
+          </p-floatLabel>
+          <!-- TODO: Alignment -->
+          <!-- TODO: Armor Class -->
+          <!-- TODO: Hit Points -->
+          <!-- TODO: Speed -->
+        </div>
+
+        <div class="flex flex-row items-center">
+          <p-floatLabel>
+            <p-dropdown
+              [options]="challengeRatings"
+              formControlName="challengeRating"
+              inputId="challengeRating"
+              [scrollHeight]="'300px'"
+              [style]="{ minWidth: '200px' }"
+            ></p-dropdown>
+            <label for="challengeRating">Challenge Rating</label>
+          </p-floatLabel>
+        </div>
+      </div>
+    </div>
+
+    <div class="border border-gray-600 rounded"></div>
+
+    <p-accordion [multiple]="true" [activeIndex]="[]">
+      <p-accordionTab header="Description">
+        <div class="relative">
+          <textarea
+            pInputTextarea
+            formControlName="description"
+            rows="8"
+            cols="50"
+            maxlength="{{ descriptionMaxLength }}"
+            class="w-full"
+            placeholder="Beschreibung"
+          ></textarea>
+          <span class="char-counter">
+            {{ descriptionLength }}/{{ descriptionMaxLength }}
+          </span>
+        </div>
+      </p-accordionTab>
+
+      <p-accordionTab header="Traits">
+        <div class="relative">
+          <textarea
+            pInputTextarea
+            formControlName="traits"
+            rows="8"
+            cols="50"
+            maxlength="{{ traitsMaxLength }}"
+            class="w-full"
+            placeholder="Traits"
+          ></textarea>
+          <span class="char-counter">
+            {{ traitsLength }}/{{ traitsMaxLength }}
+          </span>
+        </div>
+      </p-accordionTab>
+
+      <p-accordionTab header="Attributes & Skills">
+        <div class="flex flex-1 flex-col px-3" style="height: 40rem">
+          <!-- Attributes -->
+          <div class="attributes w-full h-32">
+            <div
+              class="flex flex-row justify-around"
+              formGroupName="attributes"
+            >
+              <ng-container
+                *ngFor="let attr of getAttributes()"
+                formGroupName="{{ attr }}"
+              >
+                <div class="flex flex-row items-center gap-1 w-min">
+                  <div class="flex flex-col items-center w-16 text-2xl">
+                    <label htmlFor="{{ attr }}" class="text-sm">{{
+                      attr.charAt(0).toUpperCase() + attr.slice(1)
+                    }}</label>
+                    <div class="flex flex-row w-full">
+                      <!-- TODO: beim Anklicken kleine dreicke in die ecken des feldes (proficiency for death saves) 4-->
+                      <input
+                        type="number"
+                        id="{{ attr }}"
+                        pInputText
+                        formControlName="value"
+                        [placeholder]="0"
+                        class="w-16 h-16 text-center text-3xl"
+                        (keydown)="preventAccordionNavigation($event)"
+                      />
+                    </div>
+                    <div
+                      class="text-center w-10 h-7 bg-gray-800 text-base -mt-2"
+                      style="border-radius: 70%"
+                    >
+                      {{ getModifier(attr) }}
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+
+          <div class="border border-gray-600 rounded my-2"></div>
+
+          <!-- Skills -->
+          <div
+            class="skills flex flex-1 flex-col gap-2 mt-2"
+            formGroupName="skills"
+          >
+            <div
+              class="flex flex-row justify-center align-content-around text-xl px-4"
+            >
+              <div class="w-1/2 flex flex-row items-center justify-start">
+                <div id="proficiencyBonus" class="data-field square medium">
+                  {{ getProficiencyBonus() }}
+                </div>
+                <label htmlFor="proficiencyBonus" class="ml-4"
+                  >Proficiency Bonus</label
+                >
+              </div>
+              <div class="w-1/2 flex flex-row justify-end items-center">
+                <label htmlFor="jackOfAllTrades" class="mr-4"
+                  >Jack of All Trades</label
+                >
+                <p-checkbox
+                  formControlName="jackOfAllTrades"
+                  [binary]="true"
+                ></p-checkbox>
+              </div>
+            </div>
+
+            <p-table
+              [value]="getSkills()"
+              [scrollable]="true"
+              scrollHeight="29rem"
+              responsiveLayout="scroll"
+              class="p-datatable-striped h-40"
+              styleClass="p-datatable-sm"
+            >
+              <ng-template pTemplate="header">
+                <tr>
+                  <th>Skill</th>
+                  <th class="text-center">Bonus</th>
+                  <th class="text-center">Proficiency</th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-skill>
+                <tr class="h-2">
+                  <td>{{ skill.label }}</td>
+                  <td class="text-center">
+                    <!-- TODO Implizit errechnen -->
+                    {{
+                      getSkillModifier(skill.modifierAttribute, skill.skill_key)
+                    }}
+                  </td>
+                  <td class="flex flex-row justify-center">
+                    <div
+                      class="data-field square small flex flex-row items-center justify-center"
+                      (click)="cycleProficiency(skill.skill_key)"
+                    >
+                      <span [ngSwitch]="getProficiency(skill.skill_key)">
+                        <i
+                          *ngSwitchCase="'untrained'"
+                          class="pi pi-times text-red-600"
+                        ></i>
+                        <i
+                          *ngSwitchCase="'expert'"
+                          class="pi pi-star-fill text-green-600"
+                        ></i>
+                        <i
+                          *ngSwitchCase="'proficient'"
+                          class="pi pi-star text-yellow-600"
+                        ></i>
+                        <i
+                          *ngSwitchDefault
+                          class="pi pi-times text-red-600"
+                        ></i>
+                      </span>
+                    </div>
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
+        </div>
+      </p-accordionTab>
+
+      <p-accordionTab header="Senses"> Work in progress ...</p-accordionTab>
+
+      <p-accordionTab header="Languages">
+        <input
+          type="text"
+          pInputText
+          formControlName="languageNoteOverride"
+          placeholder="Language Note Override"
+          maxlength="128"
+          class="text-2xl w-full mb-8"
+        />
+
+        <app-datatable
+          [items]="getLanguages()"
+          [itemForm]="languageForm"
+          [currentItem]="currentLanguage"
+          [selectedItems]="selectedLanguages"
+          [columns]="[
+            { field: 'name', header: 'Name', size: 40, type: 'text' },
+            { field: 'note', header: 'Note', size: 45, type: 'text' }
+          ]"
+          [primaryKeys]="['name']"
+          (itemsChange)="setLanguages($event)"
+          (currentItemChange)="currentLanguage = $event"
+          (selectedItemsChange)="selectedLanguages = $event"
+        ></app-datatable>
+      </p-accordionTab>
+
+      <p-accordionTab header="Abilities">
+        <app-datatable
+          [items]="getAbilities()"
+          [itemForm]="abilityForm"
+          [currentItem]="currentAbility"
+          [selectedItems]="selectedAbilities"
+          [columns]="[
+            { field: 'name', header: 'Name', size: 40, type: 'text' },
+            {
+              field: 'description',
+              header: 'Description',
+              size: 45,
+              type: 'text'
+            }
+          ]"
+          [primaryKeys]="['name']"
+          (itemsChange)="setAbilities($event)"
+          (currentItemChange)="currentAbility = $event"
+          (selectedItemsChange)="selectedAbilities = $event"
+        ></app-datatable>
+      </p-accordionTab>
+
+      <p-accordionTab header="Damage Responses">
+        <div
+          class="flex flex-col gap-6 m-4"
+          [formGroupName]="'damageResponses'"
+        >
+          <div class="flex flex-col gap-2">
+            <label for="damageVulnerabilities">Damage Vulnerabilities</label>
+            <p-autoComplete
+              [suggestions]="filteredDamageResponses"
+              (completeMethod)="
+                filterDamageResponses(
+                  $event,
+                  convertToDamageEffect('vulnerable')
+                )
+              "
+              formControlName="vulnerable"
+              [dropdown]="true"
+              [multiple]="true"
+              [forceSelection]="true"
+              field="label"
+              placeholder="Select Damage Vulnerabilities"
+              [inputStyle]="{ width: '300px' }"
+            >
+            </p-autoComplete>
+          </div>
+          <div class="flex flex-col gap-2">
+            <label for="damageImmunities">Damage Immunities</label>
+            <p-autoComplete
+              [suggestions]="filteredDamageResponses"
+              (completeMethod)="
+                filterDamageResponses($event, convertToDamageEffect('immune'))
+              "
+              formControlName="immune"
+              [dropdown]="true"
+              [multiple]="true"
+              [forceSelection]="true"
+              field="label"
+              placeholder="Select Damage Immunities"
+              [inputStyle]="{ width: '300px' }"
+            >
+            </p-autoComplete>
+          </div>
+          <div class="flex flex-col gap-2">
+            <label for="damageResistances">Damage Resistances</label>
+            <p-autoComplete
+              [suggestions]="filteredDamageResponses"
+              (completeMethod)="
+                filterDamageResponses(
+                  $event,
+                  convertToDamageEffect('resistant')
+                )
+              "
+              formControlName="resistant"
+              [dropdown]="true"
+              [multiple]="true"
+              [forceSelection]="true"
+              field="label"
+              placeholder="Select Damage Resistances"
+              [inputStyle]="{ width: '300px' }"
+            >
+            </p-autoComplete>
+          </div>
+        </div>
+      </p-accordionTab>
+
+      <p-accordionTab header="Actions">
+        <app-datatable
+          [items]="getActions()"
+          [itemForm]="actionForm"
+          [currentItem]="currentAction"
+          [selectedItems]="selectedActions"
+          [columns]="[
+            { field: 'name', header: 'Name', size: 30, type: 'text' },
+            {
+              field: 'description',
+              header: 'Description',
+              size: 35,
+              type: 'text'
+            },
+            {
+              field: 'type',
+              header: 'Type',
+              size: 20,
+              type: 'autocomplete',
+              suggestions: actionTypeSuggestions,
+              completeMethod: 'searchActionTypes'
+            }
+          ]"
+          [primaryKeys]="['type']"
+          (itemsChange)="setActions($event)"
+          (currentItemChange)="currentAbility = $event"
+          (selectedItemsChange)="selectedActions = $event"
+        ></app-datatable>
+      </p-accordionTab>
+    </p-accordion>
+
+    <!-- Submit Button -->
+    <div class="mt-4">
+      <p-button
+        type="submit"
+        label="Abschicken"
+        icon="fa-solid fa-paper-plane"
+      />
+    </div>
+  </form>
+</div>

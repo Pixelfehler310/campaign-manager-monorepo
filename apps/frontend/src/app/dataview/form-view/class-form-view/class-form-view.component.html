@@ -1,0 +1,141 @@
+<div class="p-10">
+  <form [formGroup]="classForm" (ngSubmit)="onSubmit()" class="space-y-4">
+    <div class="flex flex-row character-info flex-wrap">
+      <!-- TODO 9: <p-fileUpload mode="basic" chooseLabel="Choose" chooseIcon="pi pi-upload" name="demo[]" url="https://www.primefaces.org/cdn/api/upload.php" accept="image/*" maxFileSize="1000000" (onUpload)="onUpload($event)" /> 9 -->
+      <div class="character-image-container flex items-center justify-center">
+        <div
+          class="character-image-wrapper flex items-center justify-center border border-gray-600 overflow-hidden"
+        >
+          <div *ngIf="!uploadedImage" class="file-upload-wrapper">
+            <p-fileUpload
+              name="classImage"
+              mode="basic"
+              class="custom-file-upload"
+              customUpload="true"
+              (uploadHandler)="onImageUpload($event)"
+              [auto]="true"
+              accept="image/*"
+              maxFileSize="1000000"
+              chooseLabel="Bild"
+            >
+              <ng-template pTemplate="chooseicon">
+                <i class="fa-solid fa-file-arrow-up"></i>
+              </ng-template>
+            </p-fileUpload>
+          </div>
+          <div *ngIf="uploadedImage">
+            <div class="image-preview-wrapper">
+              <img
+                [src]="uploadedImage"
+                alt="Class Image"
+                class="image-preview"
+              />
+              <div class="button-overlay">
+                <p-button
+                  icon="fa-regular fa-trash-can"
+                  class="image-button"
+                  [loading]="deleting"
+                  (onClick)="deleteImage()"
+                ></p-button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="border border-gray-600 rounded mx-3 h-40"></div>
+
+      <!-- Basic Info -->
+      <div class="flex flex-col gap-2 flex-grow h-40 mb-6">
+        <input
+          type="text"
+          pInputText
+          formControlName="name"
+          placeholder="Name"
+          class="text-2xl"
+        />
+
+        <div class="flex flex-row items-center">
+          <div style="position: relative; width: 100%">
+            <div class="flex flex-col gap-4 py-4">
+              <div class="flex flex-row gap-6">
+                <div class="flex flex-row items-center">
+                  <label for="trefferwuerfel" class="pr-2">Trefferwürfel</label>
+                  <p-dropdown
+                    [options]="getDiceItems()"
+                    formControlName="hitDice"
+                    placeholder="Würfel"
+                    styleClass="w-28"
+                  >
+                  </p-dropdown>
+                </div>
+                <p-multiSelect
+                  [options]="getAbilityItems()"
+                  formControlName="primaryAbilities"
+                  placeholder="Primäre Fähigkeiten"
+                ></p-multiSelect>
+                <!-- TODO: Es gibt auch Abilities mit or siehe DnD Beyond Fighter -->
+                <p-multiSelect
+                  [options]="armorOptions"
+                  formControlName="armorProficiencies"
+                  placeholder="Rüstungen"
+                ></p-multiSelect>
+                <p-multiSelect
+                  [options]="weaponOptions"
+                  formControlName="weaponProficiencies"
+                  placeholder="Waffen"
+                ></p-multiSelect>
+                <p-multiSelect
+                  [options]="skillOptions"
+                  formControlName="skillProficiencies"
+                  placeholder="Skills"
+                ></p-multiSelect>
+              </div>
+              <div class="flex flex-row gap-6">
+                <p-multiSelect
+                  [options]="subClasses"
+                  formControlName="subclasses"
+                  placeholder="Subklassen"
+                ></p-multiSelect>
+                <p-autoComplete
+                  [suggestions]="filteredSpells"
+                  (completeMethod)="filterSpells($event)"
+                  formControlName="learnableSpells"
+                  [dropdown]="true"
+                  [multiple]="true"
+                  [forceSelection]="true"
+                  field="label"
+                  placeholder="Select Spells"
+                >
+                </p-autoComplete>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="relative">
+      <textarea
+        pInputTextarea
+        formControlName="description"
+        rows="4"
+        cols="50"
+        maxlength="{{ descriptionMaxLength }}"
+        class="w-full"
+        placeholder="Beschreibung"
+      ></textarea>
+      <span class="char-counter">
+        {{ descriptionLength }}/{{ descriptionMaxLength }}
+      </span>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="mt-4">
+      <p-button
+        type="submit"
+        label="Abschicken"
+        icon="fa-solid fa-paper-plane"
+      />
+    </div>
+  </form>
+</div>

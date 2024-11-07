@@ -1,0 +1,40 @@
+<div class="character-image-container flex items-center justify-center">
+  <div
+    class="character-image-wrapper flex items-center justify-center border border-gray-600 overflow-hidden"
+  >
+    <div *ngIf="!imageUrl" class="file-upload-wrapper">
+      <p-fileUpload
+        name="classImage"
+        mode="basic"
+        class="custom-file-upload"
+        customUpload="true"
+        (uploadHandler)="onImageUpload($event)"
+        [auto]="true"
+        accept="image/*"
+        maxFileSize="1000000"
+        chooseLabel="Bild"
+      >
+        <ng-template pTemplate="chooseicon">
+          <i class="fa-solid fa-file-arrow-up"></i>
+        </ng-template>
+      </p-fileUpload>
+    </div>
+    <div *ngIf="imageUrl && !disabled">
+      <div class="image-preview-wrapper">
+        <img [src]="imageUrl" alt="{{ imageUrl }}" class="image-preview" />
+        <div class="button-overlay">
+          <p-button
+            icon="fa-regular fa-trash-can"
+            class="image-button"
+            (onClick)="deleteImage()"
+          ></p-button>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="imageUrl && disabled">
+      <div class="image-preview-wrapper">
+        <img [src]="imageUrl" alt="{{ imageUrl }}" class="image-preview" />
+      </div>
+    </div>
+  </div>
+</div>

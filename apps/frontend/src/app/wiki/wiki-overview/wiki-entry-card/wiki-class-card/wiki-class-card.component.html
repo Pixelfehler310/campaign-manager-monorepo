@@ -1,0 +1,49 @@
+<p-card styleClass="border rounded-3xl border-gray-600">
+  <ng-template pTemplate="header">
+    <div
+      class="mt-1 absolute flex items-center justify-center flex-1 w-40 ml-4"
+    >
+      <div class="data-field w-min px-2 text-lg">Class</div>
+    </div>
+  </ng-template>
+  <!-- todo: links und css klassen namen hier ändern, neues default bild-->
+  <div class="flex flex-row character-info flex-wrap">
+    <!-- Character Image -->
+    <div
+      class="character-image w-40 h-40 border-2 border-gray-500 rounded-3xl flex items-center justify-center"
+    >
+      <div
+        class="character-image border border-gray-600 flex items-center justify-center overflow-hidden"
+        style="width: 9.5rem; height: 9.5rem; border-radius: 1.25rem"
+      >
+        <img
+          [src]="'assets/characters/img/' + (klass.img ?? 'pinguin.jpg')"
+          alt="{{ 'assets/characters/img/' + (klass.img ?? 'dwarf_male.png') }}"
+          class="w-36 h-35 rounded-2xl"
+        />
+      </div>
+    </div>
+
+    <div class="border border-gray-600 rounded mx-3 h-40"></div>
+
+    <!-- Basic Info -->
+    <div class="flex flex-col flex-1 h-40 basic-info">
+      <div class="data-field px-2 mx-1">
+        <span class="text-2xl">{{ klass.name }}</span>
+      </div>
+      <div class="subclasses my-2 mx-2">
+        <div *ngFor="let subclass of klass.subclasses">
+          <p-chip
+            styleClass="text-xs"
+            label="{{ subclass.subclass_name }}"
+          ></p-chip>
+        </div>
+      </div>
+      <p class="description data-field px-2 mx-1 text-xs h-20 line-clamp-5">
+        {{ klass.description }}
+      </p>
+    </div>
+  </div>
+</p-card>
+
+<!-- TODO: Vertical layout für media -->

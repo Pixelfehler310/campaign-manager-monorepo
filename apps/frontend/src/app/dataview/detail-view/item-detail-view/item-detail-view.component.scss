@@ -1,0 +1,15 @@
+.char-counter {
+  position: absolute;
+  bottom: -10px;
+  right: 5px;
+  font-size: 12px;
+  color: #999;
+}
+
+.inputGroupFlex {
+  width: fit-content;
+}
+
+::ng-deep .inputMax150 input {
+  max-width: 150px;
+}

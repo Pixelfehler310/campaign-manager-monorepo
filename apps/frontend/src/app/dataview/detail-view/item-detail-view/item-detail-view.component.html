@@ -1,0 +1,174 @@
+<div class="p-10">
+  <div class="space-y-4">
+    <div class="flex flex-row flex-wrap">
+      <app-image-upload
+        imageUrl="assets/characters/img/pinguin.jpg"
+        [disabled]="true"
+      ></app-image-upload>
+
+      <div class="border border-gray-600 rounded mx-3 h-48"></div>
+
+      <!-- Basic Info -->
+      <div class="flex flex-col gap-8 flex-grow h-40 mb-6">
+        <p-floatLabel>
+          <input
+            type="text"
+            pInputText
+            [value]="getName()"
+            id="name"
+            class="text-2xl w-full"
+            disabled="true"
+          />
+          <label for="name">Name</label>
+        </p-floatLabel>
+
+        <div class="flex flex-row items-center gap-6">
+          <p-floatLabel>
+            <p-dropdown
+              [options]="itemTypeOptions"
+              [ngModel]="getType()"
+              inputId="type"
+              [style]="{ minWidth: '150px' }"
+              [disabled]="true"
+            />
+            <label for="type">Type</label>
+          </p-floatLabel>
+
+          <p-inputGroup id="cost" class="inputGroupFlex">
+            <p-floatLabel>
+              <p-inputNumber
+                [ngModel]="getCostAmount()"
+                id="costAmount"
+                [style]="{ minWidth: '50px', maxWidth: '150px' }"
+                [disabled]="true"
+              />
+              <label for="costAmount">Cost</label>
+            </p-floatLabel>
+            <p-dropdown
+              [options]="moneyUnitOptions"
+              [ngModel]="getCostMoneyUnit()"
+              inputId="costMoneyUnit"
+              [style]="{ minWidth: '125px' }"
+              [disabled]="true"
+            ></p-dropdown>
+          </p-inputGroup>
+          <!-- TODO Woow das mit weight sieht total cool aus, kann man sowas maybe für das gold machen? -->
+          <!-- Weight auskommentiert, gut dass es da ist, aber da die meisten sowieso ohne weight spielen, und es sich deswegen nicht lohnt es bei den anderen stellen einzubauen wird es hier aus konsistenz gründen auskommentiert -->
+          <!-- <p-inputGroup class="inputGroupFlex">
+            <p-floatLabel>
+              <p-inputNumber [ngModel]="getWeight()" id="weight" [style]="{ minWidth: '50px', maxWidth: '150px' }" [disabled]="true" />
+              <label for="weight">Weight</label>
+            </p-floatLabel>
+            <p-inputGroupAddon>lb.</p-inputGroupAddon>
+          </p-inputGroup> -->
+        </div>
+
+        <div class="flex flex-row items-center"></div>
+      </div>
+    </div>
+
+    <div class="border border-gray-600 rounded"></div>
+
+    <p-accordion [multiple]="true" [activeIndex]="[]">
+      <p-accordionTab header="Description">
+        <div class="relative">
+          <textarea
+            pInputTextarea
+            [value]="getDescription()"
+            rows="8"
+            cols="50"
+            class="w-full"
+            placeholder="Beschreibung"
+            [disabled]="true"
+          ></textarea>
+          <span class="char-counter">
+            {{ descriptionLength }}/{{ descriptionMaxLength }}
+          </span>
+        </div>
+      </p-accordionTab>
+
+      <!-- Joo der hover effect ist ultra wild -->
+      <!-- Overlay ist cool, hätte die actions (!!! nicht attacks ;P) aber lieber in ner tabelle, damit man auf einen blick das sieht, was später auch beim character oder monster angezeigt werden würde -->
+      <!-- Warum da nicht auch click sachen machen beim character? Weil der spieler die actions immer direkt auf einen blick sehen und vorallem gut vergleichen können soll, das nimmt nämlich tatsächlich die meiste zeit des spiels ein, daher sollten wir das so effizient und einfach wie möglich machen -->
+      <p-accordionTab *ngIf="isTypeWeapon()" header="Attacks">
+        <div class="flex flex-row gap-4">
+          <p-chip
+            *ngFor="let attack of attacks"
+            label="{{ attack.name }}"
+            (click)="showAttackOverlay($event, attack, attackPanel)"
+            class="reactive-chip"
+          >
+          </p-chip>
+        </div>
+
+        <p-overlayPanel #attackPanel [showCloseIcon]="true">
+          <div class="p-4">
+            <h5 class="text-lg font-bold">{{ selectedAttack?.name }}</h5>
+            <p class="text-sm">{{ selectedAttack?.description }}</p>
+            <br />
+            <p class="text-sm">ActionType: {{ selectedAttack?.type }}</p>
+            <p class="text-sm">
+              AttackBonus: {{ selectedAttack?.attackBonus }}
+            </p>
+            <p class="text-sm">
+              Proficiency: {{ selectedAttack?.proficiency }}
+            </p>
+            <p class="text-sm">
+              Damage: {{ getDiceTypes(selectedAttack?.damage) }}
+            </p>
+            <p class="text-sm">DamageType: {{ selectedAttack?.damageType }}</p>
+            <p class="text-sm">AttackType: {{ selectedAttack?.attackType }}</p>
+          </div>
+        </p-overlayPanel>
+      </p-accordionTab>
+
+      <p-accordionTab *ngIf="isTypeArmor()" header="Armor">
+        <div class="flex flex-col gap-8 ml-4 mt-8">
+          <div class="flex flex-row items-center gap-6">
+            <p-floatLabel>
+              <p-inputNumber
+                [ngModel]="getArmorClass()"
+                id="armorClass"
+                class="inputMax150"
+                [min]="0"
+                [max]="100"
+                [disabled]="true"
+              />
+              <label for="armorClass">Armor Class</label>
+            </p-floatLabel>
+
+            <p-floatLabel>
+              <p-dropdown
+                [options]="armorTypeOptions"
+                [ngModel]="getArmorType()"
+                inputId="armorType"
+                class="w-fit"
+                [style]="{ minWidth: '150px' }"
+                [disabled]="true"
+              />
+              <label for="armorType">Armor Type</label>
+            </p-floatLabel>
+          </div>
+        </div>
+      </p-accordionTab>
+
+      <p-accordionTab *ngIf="isTypeTool()" header="Tool">
+        <div class="flex flex-col gap-8 ml-4 mt-8">
+          <div class="flex flex-row items-center gap-6">
+            <p-floatLabel>
+              <p-dropdown
+                [options]="toolTypeOptions"
+                [ngModel]="getToolType()"
+                inputId="toolType"
+                class="w-fit"
+                [style]="{ minWidth: '200px' }"
+                [disabled]="true"
+              />
+              <label for="toolProficiency">Tool Type</label>
+            </p-floatLabel>
+          </div>
+        </div>
+      </p-accordionTab>
+    </p-accordion>
+  </div>
+</div>

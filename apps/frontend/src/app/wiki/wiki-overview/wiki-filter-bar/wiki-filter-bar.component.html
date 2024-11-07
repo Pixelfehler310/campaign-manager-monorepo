@@ -1,0 +1,8 @@
+<p-multiSelect
+  [options]="filterOptions"
+  optionLabel="label"
+  optionValue="value"
+  [(ngModel)]="selectedFilters"
+  (onChange)="onFilter($event)"
+>
+</p-multiSelect>

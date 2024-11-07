@@ -1,0 +1,73 @@
+<p-card styleClass="border rounded-3xl border-gray-600">
+  <ng-template pTemplate="header">
+    <div
+      class="mt-1 absolute flex items-center justify-center flex-1 w-40 ml-4"
+    >
+      <div class="data-field w-min px-2 text-lg">Character</div>
+    </div>
+  </ng-template>
+  <!-- todo: assets/characters urls und so, pro klasse und geschlecht soll es ein standardbild geben, um npcs flexibler zu gestalten 1-->
+  <div class="flex flex-row character-info flex-wrap">
+    <!-- Character Image -->
+    <div
+      class="character-image w-40 h-40 border-2 border-gray-500 rounded-3xl flex items-center justify-center"
+    >
+      <div
+        class="character-image border border-gray-600 flex items-center justify-center overflow-hidden"
+        style="width: 9.5rem; height: 9.5rem; border-radius: 1.25rem"
+      >
+        <img
+          [src]="'assets/characters/img/' + (character.img ?? 'pinguin.jpg')"
+          alt="{{
+            'assets/characters/img/' + (character.img ?? 'dwarf_male.png')
+          }}"
+          class="w-36 h-35 rounded-2xl"
+        />
+      </div>
+    </div>
+
+    <div class="border border-gray-600 rounded mx-3 h-40"></div>
+
+    <!-- Basic Info -->
+    <div class="flex flex-col flex-1 h-40 basic-info">
+      <div class="data-field px-2 mx-1">
+        <span class="text-2xl">{{ character.name }}</span>
+      </div>
+
+      <label class="font-bold mr-2 text-xs ml-2">Klasse:</label>
+      <div class="data-field px-2 mx-1 w-min flex items-center gap-2">
+        <span class="w-min">{{ character.class }}</span>
+        <span class="w-min text-center">{{ character.level }}</span>
+      </div>
+      <div>
+        <label class="font-bold text-xs ml-2">Spezies:</label>
+        <div class="data-field px-2 mx-1 w-min flex items-center gap-2">
+          <span>{{ character.species }}</span>
+          <div *ngIf="character.gender">
+            <div [ngSwitch]="character.gender">
+              <i *ngSwitchCase="'Male'" class="fas fa-mars text-blue-500"></i>
+              <i
+                *ngSwitchCase="'Female'"
+                class="fas fa-venus text-pink-500"
+              ></i>
+              <i
+                *ngSwitchCase="'Other'"
+                class="fas fa-genderless text-yellow-500"
+              ></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-1 items-end justify-end">
+        <div class="flex flex-col items-end px-2">
+          <label class="font-bold mr-2 text-xs">Spieler:</label>
+          <div class="data-field px-2 mx-1 my-1 w-min">
+            <span>{{ character.player }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</p-card>
+
+<!-- TODO: Vertical layout für media 4, nicht priorisieren pls-->

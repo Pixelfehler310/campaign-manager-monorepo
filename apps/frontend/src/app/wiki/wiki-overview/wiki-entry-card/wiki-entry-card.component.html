@@ -1,0 +1,38 @@
+<div *ngIf="isMonster(entry)">
+  <wiki-monster-card [monster]="entry"></wiki-monster-card>
+</div>
+<div *ngIf="isCharacter(entry)">
+  <wiki-character-card [character]="entry"></wiki-character-card>
+</div>
+<div *ngIf="isRegion(entry)">
+  <wiki-region-card [region]="entry"></wiki-region-card>
+</div>
+<div *ngIf="isSpell(entry)">
+  <wiki-spell-card [spell]="entry"></wiki-spell-card>
+</div>
+<div *ngIf="isClass(entry)">
+  <wiki-class-card [klass]="entry"></wiki-class-card>
+</div>
+<div *ngIf="isItem(entry)">
+  <wiki-item-card [item]="entry"></wiki-item-card>
+</div>
+<div *ngIf="isSpecies(entry)">
+  <wiki-species-card [species]="entry"></wiki-species-card>
+</div>
+
+<!-- <div *ngSwitchCase="Quest">
+
+    </div>
+    <div *ngSwitchCase="Rumor">
+
+    </div>
+    <div *ngSwitchCase="Campaign">
+
+    </div>
+    <div *ngSwitchCase="Location">
+
+    </div>
+    <div *ngSwitchCase="Faction">
+
+    </div>
+     -->

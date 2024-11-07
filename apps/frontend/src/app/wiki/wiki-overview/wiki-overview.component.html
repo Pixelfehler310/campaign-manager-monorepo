@@ -1,0 +1,18 @@
+<!-- src/app/components/wiki-overview/wiki-overview.component.html -->
+<div class="px-10 py-5 w-full">
+  <div class="flex flex-row justify-between items-center flex-1 gap-4">
+    <wiki-search-bar
+      class="w-2/3"
+      (search)="onSearch($event)"
+    ></wiki-search-bar>
+    <wiki-filter-bar (filter)="onFilter($event)"></wiki-filter-bar>
+  </div>
+  <div class="mt-4 overflow-auto">
+    <div class="flex flex-1 flex-col">
+      <div *ngFor="let entry of filteredEntries; let i = index" class="w-full">
+        <wiki-entry-card class="wiki-card" [entry]="entry"></wiki-entry-card>
+        <div class="divider my-4" *ngIf="i < filteredEntries.length - 1"></div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,140 @@
+<p-toolbar *ngIf="!disabled" styleClass="mb-4 gap-2">
+  <ng-template pTemplate="left">
+    <p-button
+      severity="success"
+      (onClick)="openNew()"
+      icon="fa-solid fa-plus"
+      class="mr-4"
+    />
+    <p-button
+      severity="danger"
+      (onClick)="deleteSelectedItems()"
+      icon="fa-regular fa-trash-can"
+      [disabled]="!selectedItems || !selectedItems.length"
+    />
+  </ng-template>
+</p-toolbar>
+<p-table
+  #dt
+  [value]="items"
+  [(selection)]="selectedItems"
+  [rows]="5"
+  [paginator]="true"
+  styleClass="p-datatable-striped"
+>
+  <ng-template pTemplate="header">
+    <tr>
+      <th *ngIf="!disabled" style="width: 5%">
+        <p-tableHeaderCheckbox [disabled]="disabled"></p-tableHeaderCheckbox>
+      </th>
+      <th *ngFor="let col of columns" [style.width.%]="col.size">
+        {{ col.header }}
+      </th>
+      <th *ngIf="!disabled" style="width: 10%"></th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-item>
+    <tr>
+      <td *ngIf="!disabled">
+        <p-tableCheckbox [value]="item" [disabled]="disabled"></p-tableCheckbox>
+      </td>
+      <td *ngFor="let col of columns">{{ item[col.field] }}</td>
+      <td *ngIf="!disabled" class="flex justify-evenly">
+        <button
+          pButton
+          pRipple
+          icon="fa-solid fa-pen"
+          class="p-button-rounded p-button-success mr-2"
+          (click)="editItem(item)"
+          [disabled]="disabled"
+        ></button>
+        <button
+          pButton
+          pRipple
+          icon="fa-regular fa-trash-can"
+          class="p-button-rounded p-button-danger"
+          (click)="deleteItem(item)"
+          [disabled]="disabled"
+        ></button>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<form *ngIf="!disabled && itemForm" [formGroup]="itemForm">
+  <p-dialog
+    [(visible)]="itemDialog"
+    [style]="{ width: '450px' }"
+    header="Add Item"
+    [modal]="true"
+    styleClass="p-fluid"
+  >
+    <ng-template pTemplate="content">
+      <div *ngFor="let col of columns" class="mb-4">
+        <label [for]="col.field">{{ col.header }}</label>
+        <ng-container [ngSwitch]="col.type">
+          <input
+            *ngSwitchCase="'text'"
+            [id]="col.field"
+            type="text"
+            pInputText
+            [formControlName]="col.field"
+            [placeholder]="col.header"
+          />
+          <input
+            *ngSwitchCase="'number'"
+            [id]="col.field"
+            type="number"
+            pInputNumber
+            [formControlName]="col.field"
+            [placeholder]="col.header"
+          />
+          <p-autoComplete
+            *ngSwitchCase="'autocomplete'"
+            [id]="col.field"
+            [formControlName]="col.field"
+            [suggestions]="col.suggestions || []"
+            (completeMethod)="handleCompleteMethod($event, col.completeMethod)"
+            [placeholder]="col.header"
+            [forceSelection]="true"
+            appendTo="body"
+          ></p-autoComplete>
+          <!-- Weitere Komponenten können hier hinzugefügt werden -->
+        </ng-container>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+      <p-button
+        label="Cancel"
+        icon="pi pi-times"
+        [text]="true"
+        (onClick)="hideDialog()"
+      />
+      <p-button
+        label="Save"
+        icon="pi pi-check"
+        [text]="true"
+        (onClick)="saveItem()"
+      />
+    </ng-template>
+  </p-dialog>
+  <p-toast #datatableToast></p-toast>
+  <p-confirmDialog #datatableConfirm>
+    <ng-template pTemplate="footer">
+      <button
+        type="button"
+        pButton
+        icon="fa-solid fa-xmark"
+        style="width: 42px"
+        (click)="datatableConfirm.reject()"
+      ></button>
+      <button
+        type="button"
+        pButton
+        icon="fa-solid fa-check"
+        style="width: 42px"
+        (click)="datatableConfirm.accept()"
+      ></button>
+    </ng-template>
+  </p-confirmDialog>
+</form>

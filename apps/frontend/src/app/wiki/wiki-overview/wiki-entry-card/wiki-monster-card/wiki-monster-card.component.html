@@ -1,0 +1,99 @@
+<p-card styleClass="border rounded-3xl border-gray-600 wiki-card">
+  <ng-template pTemplate="header">
+    <div
+      class="mt-1 absolute flex items-center justify-center flex-1 w-40 ml-4"
+    >
+      <div class="data-field w-min px-2 text-lg">Monster</div>
+    </div>
+  </ng-template>
+  <!-- todo: assets/monsters urls und so neues default monster bild (nur eins für monster allgemein) 1-->
+  <div class="flex flex-row monster-info flex-wrap">
+    <!-- monster Image -->
+    <div
+      class="monster-image w-40 h-40 border-2 border-gray-500 rounded-3xl flex items-center justify-center"
+    >
+      <div
+        class="monster-image border border-gray-600 flex items-center justify-center overflow-hidden"
+        style="width: 9.5rem; height: 9.5rem; border-radius: 1.25rem"
+      >
+        <img
+          [src]="'assets/characters/img/' + (monster.img ?? 'pinguin.jpg')"
+          alt="{{
+            'assets/characters/img/' + (monster.img ?? 'dwarf_male.png')
+          }}"
+          class="w-36 h-35 rounded-2xl"
+        />
+      </div>
+    </div>
+
+    <div class="border border-gray-600 rounded mx-3 h-40"></div>
+
+    <!-- Basic Info -->
+    <div class="flex flex-col flex-1 h-40 basic-info">
+      <div class="data-field px-2 mx-1 mb-1">
+        <span class="text-2xl">{{ monster.name }}</span>
+      </div>
+
+      <!-- Locations and Factions as two separate columns -->
+      <div class="flex flex-row justify-between">
+        <!-- Locations Column -->
+        <div
+          *ngIf="monster.damageResponses && monster.damageResponses.length > 0"
+          class="flex flex-col flex-1 px-2"
+        >
+          <div class="flex flex-wrap gap-1 items-center">
+            <!-- TODO NGSwitch -->
+            <!-- <p-chip pTooltip="Immune to: {{immunity}}" *ngFor="let immunity of monster.immunities" styleClass="text-xs px-1 h-5 bg-gray-600 line-clamp-1 overflow-hidden" label="{{ immunity }}" tooltipStyleClass="text-xs rounded-xl overflow-hidden p-0 ml-1"></p-chip>
+                        <p-chip pTooltip="Resistent to {{resistance}}" *ngFor="let resistance of monster.resistances" styleClass="text-xs px-1 h-5 bg-yellow-600 line-clamp-1 overflow-hidden" label="{{ resistance }}" tooltipStyleClass="text-xs rounded-xl overflow-hidden p-0 ml-1"></p-chip>
+                        <p-chip pTooltip="Vulnerable to {{vulnerability}}" *ngFor="let vulnerability of monster.vulnerabilities" styleClass="text-xs px-1 h-5 bg-red-600 line-clamp-1 overflow-hidden" label="{{ vulnerability }}" tooltipStyleClass="text-xs rounded-xl overflow-hidden p-0 ml-1"></p-chip> -->
+          </div>
+        </div>
+
+        <!-- Factions Column -->
+        <!-- <div *ngIf="region.factions.length > 0" class="flex flex-col flex-1 px-2">
+                    <div class="flex flex-wrap gap-1 items-center">
+                        <label class="font-bold text-xs">Factions:</label>
+                        <p-chip pTooltip="Faction: {{faction}}" tooltipStyleClass="text-xs bg-gray-600 border-0 shadow-none" *ngFor="let faction of region.factions" styleClass="text-xs px-1 h-5 bg-green-600" label="{{ faction }}"></p-chip>
+                    </div>
+                </div> -->
+      </div>
+
+      <!-- <div class="flex h-8 overflow-hidden items-center p-2 text-xs gap-1">
+                <p-chip pTooltip="Immune to {{immunity}}" tooltipStyleClass="text-xs bg-gray-600 border-0 shadow-none" *ngFor="let immunity of monster.immunities" styleClass="text-xs px-1 h-5 bg-gray-600 overflow-hidden line-clamp-1" label="{{ immunity }}"></p-chip>
+
+            </div> -->
+
+      <div class="flex flex-row justify-between mt-1">
+        <div class="data-field px-1 mx-1 w-min flex items-center gap-2">
+          <label class="font-bold text-xs">Typ:</label>
+          <span class="w-min text-sm">{{ monster.type }}</span>
+          <span class="w-min text-center text-sm">{{
+            monster.challengeRating
+          }}</span>
+        </div>
+        <div>
+          <div class="data-field px-2 w-min flex items-center gap-2 text-sm">
+            <label class="font-bold text-xs">Größe:</label>
+            <div *ngIf="monster.sizeCategory">
+              <div [ngSwitch]="monster.sizeCategory">
+                <div *ngSwitchCase="1">Small</div>
+                <div *ngSwitchCase="2">Medium</div>
+                <div *ngSwitchCase="3">Large</div>
+                <div *ngSwitchCase="4">Huge</div>
+                <div *ngSwitchCase="5">Gargantuan</div>
+                <div *ngSwitchCase="6">Colossal</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p
+        class="description data-field px-2 mx-1 mt-2 text-xs h-28 line-clamp-4 overflow-hidden"
+      >
+        {{ monster.description }}
+      </p>
+    </div>
+  </div>
+</p-card>
+
+<!-- TODO: Vertical layout für media -->
