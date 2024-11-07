@@ -1,15 +1,37 @@
-const nxEslintPlugin = require('@nx/eslint-plugin');
+// the older versions were magically interpreting all the imports
+// in flat config we do it explicitly
+const nxPlugin = require('@nx/eslint-plugin');
+const js = require('@eslint/js');
+const globals = require('globals');
+const jsoncParser = require('jsonc-eslint-parser');
+const tsParser = require('@typescript-eslint/parser');
+const tsEslint = require('@typescript-eslint/eslint-plugin');
 
 module.exports = [
-  { plugins: { '@nx': nxEslintPlugin } },
+  js.configs.recommended,
+  // this will spread the export blocks from the base config
+  { plugins: { '@nx': nxPlugin, "@typescript-eslint": tsEslint } },
   {
+    languageOptions: {
+      parser: tsParser,
+      globals: {
+        ...globals.node,
+      },
+    },
     rules: {
-      'attr-lowercase': 'off',
-      'doctype-first': 'off',
+      '@typescript-eslint/explicit-module-boundary-types': ['error'],
     },
   },
+  // there are no overrides, all the config blocks are "flat"
   {
-    files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
+    files: ['*.json'],
+    languageOptions: {
+      parser: jsoncParser,
+    },
+    rules: {},
+  },
+  {
+    files: ['*.ts', '*.tsx', '*.js', '*.jsx'],
     rules: {
       '@nx/enforce-module-boundaries': [
         'error',

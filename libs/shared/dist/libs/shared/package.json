@@ -1,0 +1,8 @@
+{
+  "name": "@campaign-manager/shared",
+  "version": "0.0.1",
+  "type": "commonjs",
+  "main": "./index.cjs",
+  "typings": "./index.d.ts",
+  "private": true
+}

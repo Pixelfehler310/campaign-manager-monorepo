@@ -8,7 +8,7 @@ import {
 import { Attribute } from 'src/app/types/attributes';
 import { Character, Lifestyle } from 'src/app/types/characters';
 import { SizeCategory } from 'src/app/types/entities';
-import { Skill } from 'src/app/types/skills';
+import { Skill } from '@campaign-manager/shared';
 
 export const faelan: Character = {
   id: 0,

@@ -20,7 +20,8 @@
     "useDefineForClassFields": false,
     "lib": ["ES2022", "dom"],
     "paths": {
-      "libs": ["libs/src/index.ts"]
+      "@campaign-manager/shared": ["./libs/shared/src/index.ts"],
+      "@campaign-manager/shared/*": ["./libs/shared/src/*"] // Fügt Unterstützung für Unterordner hinzu
     },
     "rootDir": "."
   },

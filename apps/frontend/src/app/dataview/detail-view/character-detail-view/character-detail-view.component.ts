@@ -1,14 +1,9 @@
 import { Inventory } from './../../../types/inventory';
-import { SpellCasterInfo } from './../../../types/spells';
-import { Character } from 'src/app/types/characters';
 import { elysia } from './../../../../assets/characters/elysia';
-
+import { Character } from '@campaign-manager/shared';
 // character-detailview.component.ts
 import { Component, Input } from '@angular/core';
-import { Attribute } from 'src/app/types/attributes';
-import { Skill, skillAttributes } from 'src/app/types/skills';
-import { DiceData, DiceType, getDiceTypes } from 'src/app/types/dice';
-import { faelan } from 'src/assets/characters/faelan';
+import { faelan } from '../../../../assets/characters/faelan';
 import { isFullEntity, isFullEntityOrPrimaryKey } from 'src/app/types/general';
 
 interface CharacterDetail extends Character {

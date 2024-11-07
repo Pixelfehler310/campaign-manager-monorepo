@@ -1,0 +1,21 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "module": "commonjs",
+    "baseUrl": "./",
+    "paths": {
+      "@campaign-manager/shared": ["libs/shared/src/index.ts"],
+      "@campaign-manager/shared/*": ["libs/shared/*"]
+    }
+  },
+  "files": [],
+  "include": [],
+  "references": [
+    {
+      "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "./tsconfig.spec.json"
+    }
+  ]
+}

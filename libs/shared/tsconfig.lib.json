@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig.base.json", // Stelle sicher, dass der Pfad hier korrekt ist
+  "compilerOptions": {
+    "outDir": "../../dist/out-tsc/libs/shared", // Die kompilierte Ausgabe für diese Library
+    "declaration": true,
+    "types": ["node"]
+  },
+  "include": ["src/**/*"], // Hier nur den src-Ordner der Library einbeziehen
+  "exclude": ["jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"]
+}
