@@ -1,14 +1,11 @@
 import { Component } from '@angular/core';
-import { getSizeCategoryEntries } from 'src/app/types/entities';
-import { Attribute } from 'src/app/types/attributes';
-import { Skill, skillAttributes } from 'src/app/types/skills';
 import {
+  Ability,
+  Action,
+  ActionType,
   ChallengeRating,
-  Language,
-  DamageEffect,
-} from 'src/app/types/monsters';
-import { Ability } from 'src/app/types/entities';
-import { Action, ActionType, DamageType } from 'src/app/types/actions';
+  getSizeCategoryEntries,
+} from '@campaign-manager/shared';
 
 @Component({
   selector: 'app-monster-detail-view',

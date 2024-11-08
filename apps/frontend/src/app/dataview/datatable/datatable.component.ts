@@ -9,8 +9,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Toast } from 'primeng/toast';
 import { ConfirmDialog } from 'primeng/confirmdialog';
-
-import { ActionType } from 'src/app/types/actions';
+import { ActionType } from '@campaign-manager/shared';
 
 @Component({
   selector: 'app-datatable',

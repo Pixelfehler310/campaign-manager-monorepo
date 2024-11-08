@@ -1,24 +1,24 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { DiceData, DiceType, formatDamage } from 'src/app/types/dice';
-import {
-  Attack,
-  ActionType,
-  DamageType,
-  AttackType,
-} from 'src/app/types/actions';
 import {
   ItemType,
-  getItemTypeOptions,
   MoneyUnit,
-  getMoneyUnitOptions,
+  ArmorType,
+  ToolType,
+  Attack,
   Weapon,
   Armor,
-  ArmorType,
-  getArmorTypeOptions,
   Tool,
-  ToolType,
+  ActionType,
+  DiceType,
+  DamageType,
+  AttackType,
+  getItemTypeOptions,
+  getMoneyUnitOptions,
+  getArmorTypeOptions,
   getToolTypeOptions,
-} from 'src/app/types/inventory';
+  DiceData,
+  formatDamage,
+} from '@campaign-manager/shared';
 
 @Component({
   selector: 'app-item-detail-view',

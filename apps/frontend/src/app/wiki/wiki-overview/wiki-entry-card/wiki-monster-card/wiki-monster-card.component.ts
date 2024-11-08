@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { WikiEntry } from '../wiki-entry-card.component';
-import { Monster } from 'src/app/types/monsters';
+import { Monster } from '@campaign-manager/shared';
 
 // export interface WikiMonster extends WikiEntry {
 //   name: string;

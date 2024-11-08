@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { faelan } from 'src/assets/characters/faelan';
 import { Character, Class } from '../types/characters';
 import { Item, ItemType, MoneyUnit } from '../types/inventory';
+import { faelan } from '../../assets/characters/faelan';
 
 @Component({
   selector: 'app-request-tester',

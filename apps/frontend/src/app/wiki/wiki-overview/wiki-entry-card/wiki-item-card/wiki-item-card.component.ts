@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { WikiEntry } from '../wiki-entry-card.component';
-import { Item, ItemType, MoneyUnit } from 'src/app/types/inventory';
+import { Item, MoneyUnit } from '@campaign-manager/shared';
 
 export type WikiItem = Pick<
   Item,

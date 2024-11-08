@@ -6,15 +6,9 @@ import {
   Validators,
   FormControl,
 } from '@angular/forms';
+import { Attribute, getDiceEntries } from '@campaign-manager/shared';
 import { SelectItem } from 'primeng/api';
 import { AutoCompleteCompleteEvent } from 'primeng/autocomplete';
-import {
-  DiceType,
-  DiceData,
-  getDiceKeys,
-  getDiceEntries,
-} from 'src/app/types/dice';
-import { Attribute } from 'src/app/types/attributes';
 
 @Component({
   selector: 'app-class-form-view',

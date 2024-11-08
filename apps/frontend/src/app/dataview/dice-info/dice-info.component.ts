@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { DiceData, DiceType, getDiceTypes } from 'src/app/types/dice';
+import { DiceData, DiceType, getDiceTypes } from '@campaign-manager/shared';
 
 @Component({
   selector: 'app-dice-info',

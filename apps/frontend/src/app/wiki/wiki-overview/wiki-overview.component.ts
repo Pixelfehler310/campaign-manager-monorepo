@@ -7,7 +7,6 @@ import { WikiMonster } from './wiki-entry-card/wiki-monster-card/wiki-monster-ca
 import { WikiRegion } from './wiki-entry-card/wiki-region-card/wiki-region-card.component';
 import { WikiSpecies } from './wiki-entry-card/wiki-species-card/wiki-species-card.component';
 import { WikiSpell } from './wiki-entry-card/wiki-spell-card/wiki-spell-card.component';
-import { ItemType } from 'src/app/types/inventory';
 
 export enum CardType {
   Character = 'character',

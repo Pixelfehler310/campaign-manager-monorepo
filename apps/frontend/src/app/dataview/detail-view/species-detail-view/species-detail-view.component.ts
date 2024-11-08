@@ -1,7 +1,7 @@
+import { abilities, species } from './../../../../assets/species/dragonkin';
 import { Component, Input } from '@angular/core';
 import { Species } from './../../../types/characters';
 import { Ability } from './../../../types/entities';
-import { species, abilities } from 'src/assets/species/dragonkin';
 @Component({
   selector: 'app-species-detail-view',
   templateUrl: './species-detail-view.component.html',

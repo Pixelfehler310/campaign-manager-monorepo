@@ -1,13 +1,15 @@
-import { SizeCategory } from '@campaign-manager/shared';
-import { DiceType } from 'apps/frontend/src/app/types/dice';
 import {
-  DamageType,
-  AttackType,
-  Attack,
   ActionType,
-} from 'src/app/types/actions';
-import { Attribute } from 'src/app/types/attributes';
-import { Character, Lifestyle } from 'src/app/types/characters';
+  Attack,
+  AttackType,
+  Attribute,
+  Character,
+  DamageType,
+  Lifestyle,
+  SizeCategory,
+  Skill,
+} from '@campaign-manager/shared';
+import { DiceType } from 'apps/frontend/src/app/types/dice';
 
 export const elysia: Character = {
   id: 0,

@@ -1,12 +1,12 @@
-import { Encounter, Quest, Faction } from './../../../types/campaigns';
 import {
-  regions,
-  locations,
-  rumors,
   encounters,
-  quests,
   factions,
-} from 'src/assets/regions/mystic';
+  locations,
+  quests,
+  regions,
+  rumors,
+} from './../../../../assets/regions/mystic';
+import { Encounter, Quest, Faction } from './../../../types/campaigns';
 import { Region, Location, Rumor } from './../../../types/regions';
 import { Component, Input } from '@angular/core';
 
@@ -52,8 +52,8 @@ export class RegionDetailViewComponent {
         if (location) {
           // Für jede Encounter-ID im Standort die vollständige Encounter-Daten laden
           const fullEncounters = (location.encounters ?? [])
-            .map((encRef) => this.getEncounterById(encRef.id)) // Verwende die `getEncounterById` Methode
-            .filter((encounter): encounter is Encounter => !!encounter);
+            .map((encRef: { id: number }) => this.getEncounterById(encRef.id)) // Verwende die `getEncounterById` Methode
+            .filter((encounter: any): encounter is Encounter => !!encounter);
           locationList.push({
             ...location,
             encounters: fullEncounters, // Füge die vollständigen Begegnungen hinzu

@@ -1,14 +1,10 @@
-import { DiceType } from 'src/app/types/dice';
 import {
-  DamageType,
-  AttackType,
-  Attack,
-  ActionType,
-} from 'src/app/types/actions';
-import { Attribute } from 'src/app/types/attributes';
-import { Character, Lifestyle } from 'src/app/types/characters';
-import { SizeCategory } from 'src/app/types/entities';
-import { Skill } from '@campaign-manager/shared';
+  SizeCategory,
+  Attribute,
+  Character,
+  Skill,
+  Lifestyle,
+} from '@campaign-manager/shared';
 
 export const faelan: Character = {
   id: 0,

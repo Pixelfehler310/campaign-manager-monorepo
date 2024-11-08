@@ -6,13 +6,18 @@ import {
   Validators,
   FormControl,
 } from '@angular/forms';
+import {
+  Action,
+  AttackType,
+  Attribute,
+  DamageType,
+  DiceType,
+  Skill,
+  skillAttributes,
+} from '@campaign-manager/shared';
 import { ConfirmationService, MessageService, SelectItem } from 'primeng/api';
 import { Dropdown } from 'primeng/dropdown';
 import { map, Observable, of } from 'rxjs';
-import { DiceType } from 'src/app/types/dice';
-import { Action, Attack, AttackType, DamageType } from 'src/app/types/actions';
-import { Attribute } from 'src/app/types/attributes';
-import { Skill, skillAttributes } from 'src/app/types/skills';
 
 @Component({
   selector: 'app-character-form-view',

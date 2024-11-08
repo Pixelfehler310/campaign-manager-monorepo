@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { WikiEntry } from '../wiki-entry-card.component';
-import { SpellBase } from 'src/app/types/spells';
+import { SpellBase } from '@campaign-manager/shared';
 
 export type WikiSpell = Pick<
   SpellBase,

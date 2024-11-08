@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
+import { Attribute, getDiceEntries } from '@campaign-manager/shared';
 import { SelectItem } from 'primeng/api';
 import { AutoCompleteCompleteEvent } from 'primeng/autocomplete';
-import { getDiceEntries } from '../../../types';
-import { Attribute } from 'src/app/types/attributes';
 
 @Component({
   selector: 'app-class-detail-view',

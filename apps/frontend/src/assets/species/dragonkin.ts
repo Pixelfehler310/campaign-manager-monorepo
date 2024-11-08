@@ -1,6 +1,7 @@
 // species-mock-data.ts
-import { Species } from 'src/app/types/characters';
-import { Ability } from 'src/app/types/entities';
+
+import { Ability, Species } from '@campaign-manager/shared';
+
 // Beispiel-Abilities
 export const abilities: Ability[] = [
   {

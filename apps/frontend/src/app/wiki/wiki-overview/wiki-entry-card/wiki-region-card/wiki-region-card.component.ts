@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { WikiEntry } from '../wiki-entry-card.component';
-import { Region } from 'src/app/types/regions';
+import { Region } from '@campaign-manager/shared';
 
 export type WikiRegion = Pick<
   Region,

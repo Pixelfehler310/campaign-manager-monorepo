@@ -1,17 +1,20 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, FormArray } from '@angular/forms';
+import {
+  Ability,
+  Action,
+  ActionType,
+  Attribute,
+  ChallengeRating,
+  DamageEffect,
+  DamageType,
+  getSizeCategoryEntries,
+  Language,
+  Skill,
+  skillAttributes,
+} from '@campaign-manager/shared';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { AutoCompleteCompleteEvent } from 'primeng/autocomplete';
-import { getSizeCategoryEntries } from 'src/app/types/entities';
-import { Attribute } from 'src/app/types/attributes';
-import { Skill, skillAttributes } from 'src/app/types/skills';
-import {
-  ChallengeRating,
-  Language,
-  DamageEffect,
-} from 'src/app/types/monsters';
-import { Ability } from 'src/app/types/entities';
-import { Action, ActionType, DamageType } from 'src/app/types/actions';
 
 @Component({
   selector: 'app-monster-form-view',

@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { WikiEntry } from '../wiki-entry-card.component';
-import { Species } from 'src/app/types/characters';
+import { Species } from '@campaign-manager/shared';
 
 export type WikiSpecies = Pick<
   Species,

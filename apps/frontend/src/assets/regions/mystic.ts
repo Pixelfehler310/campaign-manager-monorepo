@@ -1,7 +1,13 @@
 import { Monster } from './../../app/types/monsters';
 import { ReferenceTo } from './../../app/types/general';
-import { Region, Location, Rumor } from 'src/app/types/regions'; // Adjust the path as necessary
-import { Faction, Quest, Encounter } from 'src/app/types/campaigns';
+import {
+  Encounter,
+  Faction,
+  Location,
+  Quest,
+  Region,
+  Rumor,
+} from '@campaign-manager/shared';
 
 export const factions: Faction[] = [
   {
