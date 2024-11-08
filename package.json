@@ -3,8 +3,11 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "nx serve frontend",
-    "build": "nx build frontend",
+    "start:frontend": "nx serve frontend",
+    "start:backend": "nx serve backend",
+    "start:all": "nx serve frontend",
+    "build:frontend": "nx build frontend",
+    "build:backend": "nx build backend",
     "watch": "nx build --watch --configuration development",
     "test": "nx test"
   },
