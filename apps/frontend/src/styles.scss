@@ -1,8 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* You can add global styles to this file, and also import other style files */
 
-@import 'tailwindcss/base.css' layer(tailwind);
-@import 'tailwindcss/components.css' layer(tailwind);
-@import 'tailwindcss/utilities.css' layer(tailwind);
 @import 'primeng/resources/themes/aura-dark-blue/theme.css' layer(prime);
 @import 'primeng/resources/primeng.min.css';
 @import 'primeicons/primeicons.css';

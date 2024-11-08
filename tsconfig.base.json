@@ -21,7 +21,7 @@
     "lib": ["ES2022", "dom"],
     "paths": {
       "@campaign-manager/shared": ["./libs/shared/src/index.ts"],
-      "@campaign-manager/shared/*": ["./libs/shared/src/*"] // Fügt Unterstützung für Unterordner hinzu
+      "@campaign-manager/shared/*": ["./libs/shared/src/*"]
     },
     "rootDir": "."
   },
